@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="fondo_clientes" prefHeight="529.0" prefWidth="888.0" stylesheets="@../resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientesController">
+   <children>
+      <JFXTextField fx:id="txtF_buscar" layoutX="10.0" layoutY="73.0" prefHeight="25.0" prefWidth="170.0" promptText="Buscar..." styleClass="text-field-busqueda" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="73.0" />
+      <JFXTreeTableView fx:id="table_view_clientes" layoutY="117.0" prefHeight="410.0" prefWidth="884.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="117.0">
+         <columns>
+            <TreeTableColumn fx:id="column_nombre" maxWidth="250.0" minWidth="120.0" prefWidth="120.0" text="Nombre" />
+            <TreeTableColumn fx:id="column_direccion" minWidth="150.0" prefWidth="354.0" text="Dirección" />
+            <TreeTableColumn fx:id="column_telefono" maxWidth="200.0" minWidth="120.0" prefWidth="120.0" text="Telefono" />
+            <TreeTableColumn fx:id="column_observaciones" minWidth="150.0" prefWidth="420.0" text="Observaciones" />
+         </columns>
+         <columnResizePolicy>
+            <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </JFXTreeTableView>
+      <Label fx:id="label_clientes" prefHeight="33.0" prefWidth="245.0" styleClass="titulo" text="Clientes" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font name="Gadugi" size="30.0" />
+         </font>
+      </Label>
+      <HBox layoutX="682.0" layoutY="62.0" prefHeight="48.0" prefWidth="169.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="62.0">
+         <children>
+            <JFXButton fx:id="button_agregarCliente" ellipsisString="" onAction="#btnAddCliente_OnAction" prefHeight="58.0" prefWidth="32.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/imagenes/iconos/Cliente/cliente_add.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="button_eliminarCliente" ellipsisString="" onAction="#btnDeleteCliente_OnAction" prefHeight="58.0" prefWidth="0.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/imagenes/iconos/Cliente/cliente_delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="button_actualizarCliente" ellipsisString="" onAction="#btnActualizarCliente_OnAction" prefHeight="58.0" prefWidth="49.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/imagenes/iconos/Cliente/cliente_edit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane fx:id="anchorPaneRoot" prefHeight="669.0" prefWidth="991.0" stylesheets="@../resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ServiciosController">
+   <children>
+      <JFXTabPane fx:id="tabPaneServicios" layoutX="34.0" prefHeight="669.0" prefWidth="991.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab fx:id="tabServicios" styleClass="letra" text="Servicios">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXTextField fx:id="textField_buscarServicios" layoutX="14.0" layoutY="49.0"   prefHeight="25.0" prefWidth="269.0" promptText="Buscar servicio" styleClass="text-field-busqueda" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                        <JFXTreeTableView fx:id="tablaServicio" layoutY="70.0" prefHeight="562.0" prefWidth="991.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                           <columns>
+                              <TreeTableColumn fx:id="cmServicios_fechaAdd" prefWidth="103.0" text="Fecha adición" />
+                              <TreeTableColumn fx:id="cmServicios_fechaServicio" prefWidth="103.0" text="Fecha Servicio" />
+                              <TreeTableColumn fx:id="cmServicios_FechaAplic" prefWidth="99.0" text="Fecha aplicación" />
+                              <TreeTableColumn fx:id="cmServicios_telefono" prefWidth="85.0" text="Teléfono" />
+                              <TreeTableColumn fx:id="cmServicios_nombre" text="Nombre" />
+                              <TreeTableColumn fx:id="cmServicios_direccion" prefWidth="60.0" text="Dirección" />
+                              <TreeTableColumn fx:id="cmServicios_observaciones" minWidth="3.0" prefWidth="67.0" text="Notas" />
+                              <TreeTableColumn fx:id="cmServicios_unidad" prefWidth="109.0" text="Unidad" />
+                              <TreeTableColumn fx:id="cmServicios_modulador" prefWidth="90.0" text="Modulador" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </JFXTreeTableView>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tabServiciosPendientes" styleClass="letra" text="Servicios pendientes">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="554.0">
+                     <children>
+                        <JFXTextField fx:id="textField_buscarPendiente" layoutX="14.0" layoutY="43.0"  prefHeight="25.0" prefWidth="169.0" promptText="Buscar pendiente" styleClass="text-field-busqueda" AnchorPane.topAnchor="20.0" />
+                        <JFXTextField fx:id="textField_servicioRapido" layoutX="206.0" layoutY="44.0" prefHeight="25.0" prefWidth="169.0" promptText="Servicio rápido" styleClass="text-field-busqueda" AnchorPane.topAnchor="20.0" />
+                        <JFXTextField fx:id="textField_cantidad" layoutX="395.0" layoutY="44.0" prefHeight="25.0" prefWidth="169.0" promptText="Cantidad" styleClass="text-field-busqueda" AnchorPane.topAnchor="20.0" />
+                        <HBox alignment="CENTER" layoutX="771.0" layoutY="6.0" prefHeight="54.0" prefWidth="200.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="6.0">
+                           <children>
+                              <JFXButton fx:id="btnAddServicio" contentDisplay="CENTER" onAction="#btnAddServicioNormal_OnAction" ripplerFill="#caffbf" HBox.hgrow="ALWAYS">
+                                 <graphic>
+                                    <ImageView fitHeight="52.0" fitWidth="42.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/imagenes/iconos/Taxi/taxi-add.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <JFXButton fx:id="btnCancelServicio" contentDisplay="CENTER" onAction="#btnCancelServicioNormal_OnAction" ripplerFill="#caffbf">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/imagenes/iconos/Taxi/taxi-delete.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <JFXButton fx:id="btnAplicarServicio" contentDisplay="CENTER" onAction="#btnAplicarServicioNormal_OnAction" ripplerFill="#caffbf">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/imagenes/iconos/Taxi/taxi-okey.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                        <JFXTreeTableView fx:id="tablaServicioPend" layoutY="94.0" prefHeight="538.0" prefWidth="991.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                           <columns>
+                              <TreeTableColumn fx:id="cmServiciosPend_fechaAdd" prefWidth="75.0" text="Fecha agregación" />
+                              <TreeTableColumn fx:id="cmServiciosPend_fechaServicio" prefWidth="75.0" text="Fecha Servicio" />
+                              <TreeTableColumn fx:id="cmServiciosPend_telefono" prefWidth="75.0" text="Teléfono" />
+                              <TreeTableColumn fx:id="cmServiciosPend_nombre" prefWidth="75.0" text="Nombre" />
+                              <TreeTableColumn fx:id="cmServiciosPend_direccion" prefWidth="75.0" text="Dirección" />
+                              <TreeTableColumn fx:id="cmServiciosPend_notas" prefWidth="75.0" text="Notas" />
+                              <TreeTableColumn fx:id="cmServiciosPend_modulador" prefWidth="75.0" text="Modulador" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </JFXTreeTableView>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tabServiciosProgramados" styleClass="letra" text="Servicios programados">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXTreeTableView fx:id="tablaServicioProgr" layoutX="-7.0" layoutY="77.0" prefHeight="555.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                           <columns>
+                              <TreeTableColumn fx:id="cmServiciosProg_FechaAdicion" prefWidth="75.0" text="Fecha adición" />
+                              <TreeTableColumn fx:id="cmServiciosProg_FechaInicio" prefWidth="75.0" text="Fecha inicio" />
+                              <TreeTableColumn fx:id="cmServiciosProg_FechaUltimoDiaAplicacion" prefWidth="75.0" text="Ultimo dia aplicado" />
+                              <TreeTableColumn fx:id="cmServiciosProg_FechaFin" prefWidth="75.0" text="Fecha fin" />
+                              <TreeTableColumn fx:id="cmServiciosProg_telefono" prefWidth="75.0" text="Teléfono" />
+                              <TreeTableColumn fx:id="cmServiciosProg_nombre" prefWidth="75.0" text="Nombre" />
+                              <TreeTableColumn fx:id="cmServiciosProg_dirección" prefWidth="75.0" text="Dirección" />
+                              <TreeTableColumn fx:id="cmServiciosProg_notas" prefWidth="75.0" text="Notas" />
+                              <TreeTableColumn fx:id="cmServiciosProg_modulador" prefWidth="75.0" text="Modulador" />
+                              <TreeTableColumn fx:id="cmServiciosProg_diasServicio" prefWidth="75.0" text="Días de servicio" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </JFXTreeTableView>
+                        <JFXTextField fx:id="textField_buscarProgramado"  prefHeight="25.0" prefWidth="169.0" promptText="Buscar programado" styleClass="text-field-busqueda" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                        <HBox alignment="CENTER" layoutX="756.0" layoutY="6.0" prefHeight="54.0" prefWidth="200.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="6.0">
+                           <children>
+                              <JFXButton fx:id="btnAddProgramado" contentDisplay="CENTER" onAction="#btnAddServicioProgramado_OnAction" ripplerFill="#caffbf" HBox.hgrow="ALWAYS">
+                                 <graphic>
+                                    <ImageView fitHeight="52.0" fitWidth="42.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/imagenes/iconos/Taxi/taxi-add.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <JFXButton fx:id="btnTerminarProgramacion" contentDisplay="CENTER" onAction="#btnFinalizarServicioProgramado_OnAction" ripplerFill="#caffbf">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/imagenes/iconos/Taxi/taxi-reloj.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <JFXButton fx:id="btnAplicarServicioProgramado" contentDisplay="CENTER" onAction="#btnAplicarServicioProgramado_OnAction" ripplerFill="#caffbf">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/imagenes/iconos/Taxi/taxi-okey.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </children>
+</AnchorPane>

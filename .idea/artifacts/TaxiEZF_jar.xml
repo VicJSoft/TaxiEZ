@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TaxiEZF:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TaxiEZF_jar</output-path>
+    <root id="archive" name="TaxiEZF.jar">
+      <element id="module-output" name="TaxiEZF" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/resources/libraries/mysql-connector-java-5.1.47-bin.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/resources/libraries/jfoenix-8.0.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/resources/libraries/gson-2.8.5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
