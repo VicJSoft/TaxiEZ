@@ -136,16 +136,21 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
 
-        if(empleado==null){
+        if(empleado==null)
+        {
             //ventana error de credenciales.
-        }else{
+        }
+        else{
 
             Statics.empleadoSesionActual = empleado;
             Stage stage = new Stage();
             stage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
             Parent parent = FXMLLoader.load(getClass().getResource("/views/Principal.fxml"));
             stage.setTitle("Taxis");
-
+            if(cb_recordar.isSelected())
+            {
+                setCredenciales();
+            }
             Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.show();
@@ -159,15 +164,20 @@ public class LoginController implements Initializable {
     private void getCredeciales()
     {
         SharePreferences sharePreferences = SharePreferences.getCredenciales();
-        if(sharePreferences.getRecordar())
+        if(sharePreferences!=null)
         {
-            cb_recordar.setSelected(true);
-            txt_usuario.setText(sharePreferences.getUsuario());
+            if(sharePreferences.getRecordar())
+            {
+                cb_recordar.setSelected(true);
+                txt_usuario.setText(sharePreferences.getUsuario());
+            }
+            else
+            {
+                cb_recordar.setSelected(false);
+            }
         }
-        else
-        {
-            cb_recordar.setSelected(false);
-        }
+
+
     }
     private void setCredenciales()
     {

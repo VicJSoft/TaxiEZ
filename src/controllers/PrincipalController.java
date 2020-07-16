@@ -4,8 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import models.interfaces.IAccion;
 
 import java.io.IOException;
@@ -67,9 +73,49 @@ public class PrincipalController implements Initializable {
         cargarPantalla("Servicios");
 
     }
+    @FXML
+    void cerrarAcelerator_OnAction(ActionEvent event)
+    {
+       System.exit(0);
+    }
 
     @FXML
-    void miConfiguracion_OnAction(ActionEvent event) {
+    void cerrarSesionAcelerator_OnAction(ActionEvent event)
+    {
+        try {
+            Stage stage = new Stage();
+            stage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
+            stage.setTitle("Taxis");
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.show();
+            ((Stage)((Node)apContenedorSecundario).getScene().getWindow()).close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void miConfiguracion_OnAction(ActionEvent event)
+    {
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
+        Parent parent = null;
+        try {
+
+            parent = FXMLLoader.load(getClass().getResource("/views/Configuracion.fxml"));
+            stage.setTitle("Taxis");
+
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(apContenedorSecundario.getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
     @FXML

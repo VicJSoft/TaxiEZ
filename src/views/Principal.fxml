@@ -17,8 +17,14 @@
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem fx:id="miCerrarSesion" mnemonicParsing="false" text="Cerrar sesión" />
-              <MenuItem fx:id="miCerrar" mnemonicParsing="false" text="Cerrar" />
+                  <MenuItem fx:id="miCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesionAcelerator_OnAction" text="Cerrar sesión">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+              <MenuItem fx:id="miCerrar" mnemonicParsing="false" onAction="#cerrarAcelerator_OnAction" text="Cerrar">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Menú">
