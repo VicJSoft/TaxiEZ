@@ -5,11 +5,8 @@ import com.jfoenix.controls.JFXAlert;
 import com.jfoenix.controls.JFXDialogLayout;
 import controllers.Confirmacion;
 import controllers.ErrorController;
-import controllers.crudsControllers.EmpleadosCrudController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -29,6 +26,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class Statics {
@@ -112,7 +110,8 @@ public class Statics {
     }
 
 
-    public static Optional<Boolean> crearConfirmacion(Stage stage,String tittle,String body){
+    public static Optional<Boolean> crearConfirmacion(Stage stage, String tittle, String body, int opcion){
+
 
         JFXAlert<Boolean> alert = new JFXAlert<>(stage);
         alert.setOverlayClose(true);
@@ -127,26 +126,36 @@ public class Statics {
         content.setHeading(new Text(tittle));
         content.setBody(new Text(body));
 
-        Button btnContinuar = new Button("Continuar");
+        Button btnContinuar = new Button();
         btnContinuar.getStyleClass().add("boton");
 
-        Button btnCancelar = new Button("Cancelar");
-        btnCancelar.getStyleClass().add("boton-cancelar");
+        if(opcion==2)
+        {
+            btnContinuar.setText("Continuar");
+            btnContinuar.getStyleClass().add("boton");
 
+            Button btnCancelar = new Button("Cancelar");
+            btnCancelar.getStyleClass().add("boton-cancelar");
 
-        content.setActions(btnContinuar,btnCancelar);
+            content.setActions(btnContinuar,btnCancelar);
 
-        btnCancelar.setOnAction((action)->{
-            alert.setResult(false);
-            alert.hideWithAnimation();
-        });
-
+            btnCancelar.setOnAction((action)->{
+                alert.setResult(false);
+                alert.hideWithAnimation();
+            });
+        }
+        else
+        {
+            btnContinuar.setText("Aceptar");
+            content.setActions(btnContinuar);
+        }
         btnContinuar.setOnAction(action->{
 
             alert.setResult(true);
             alert.hideWithAnimation();
 
         });
+
 
         alert.setContent(content);
         return alert.showAndWait();
