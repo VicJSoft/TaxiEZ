@@ -50,7 +50,7 @@ public class EmpleadoSQL {
 
             ps = connection.prepareStatement(query);
             ps.setString(1, empleado.getNombre());
-            ps.setDate(2, Date.valueOf( empleado.getFechaNac()));
+            ps.setDate(2, (empleado.getFechaNac()==null?null:Date.valueOf( empleado.getFechaNac())));
             ps.setString(3, empleado.getTelefono());
             ps.setBoolean(4,empleado.isTipoEmpleado());
             ps.setString(5,empleado.getObservaciones());
@@ -82,7 +82,7 @@ public class EmpleadoSQL {
 
 
             ps.setString(1, empleado.getNombre());
-            ps.setDate(2, Date.valueOf(empleado.getFechaNac()));
+            ps.setDate(2, (empleado.getFechaNac()==null?null:Date.valueOf( empleado.getFechaNac())));
             ps.setString(3, empleado.getTelefono());
             ps.setBoolean(4, empleado.isTipoEmpleado());
             ps.setString(5, empleado.getObservaciones());
