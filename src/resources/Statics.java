@@ -10,9 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -110,7 +112,7 @@ public class Statics {
     }
 
 
-    public static Optional<Boolean> crearConfirmacion(Stage stage, String tittle, String body, int opcion){
+    public  Optional<Boolean> crearConfirmacion(Stage stage, String tittle, String body, int opcion){
 
 
         JFXAlert<Boolean> alert = new JFXAlert<>(stage);
@@ -124,18 +126,24 @@ public class Statics {
         content.getStyleClass().add("label");
 
         content.setHeading(new Text(tittle));
-        content.setBody(new Text(body));
+        Text text = new Text(body);
+
+
 
         Button btnContinuar = new Button();
         btnContinuar.getStyleClass().add("boton");
 
         if(opcion==2)
         {
+
+
+            content.setBody(text);
             btnContinuar.setText("Continuar");
             btnContinuar.getStyleClass().add("boton");
 
             Button btnCancelar = new Button("Cancelar");
             btnCancelar.getStyleClass().add("boton-cancelar");
+
 
             content.setActions(btnContinuar,btnCancelar);
 
@@ -146,12 +154,17 @@ public class Statics {
         }
         else
         {
+            //text.setTextAlignment(TextAlignment.CENTER);
+
+            content.setBody(text);
+
             btnContinuar.setText("Aceptar");
             content.setActions(btnContinuar);
         }
         btnContinuar.setOnAction(action->{
 
             alert.setResult(true);
+
             alert.hideWithAnimation();
 
         });

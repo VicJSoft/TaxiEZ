@@ -60,7 +60,7 @@ public class ClienteSQL {
             if(existe(cliente ,true)){
 
                 Optional<Boolean> resultConfirmacion =
-                        Statics.crearConfirmacion(stage,"Ese número de telefono ya está registrado","Los nuevos datos reemplazarán al anterior. \n ¿Desea continuar?",2);
+                        new Statics().crearConfirmacion(stage,"Ese número de telefono ya está registrado","Los nuevos datos reemplazarán al anterior. \n ¿Desea continuar?",2);
                 //por si solo se cierra la ventana.
                 existe = false;
 

@@ -82,7 +82,7 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
             <items>
-              <MenuItem fx:id="miAcercaDe" mnemonicParsing="false" text="Acerca de..." />
+              <MenuItem fx:id="miAcercaDe" mnemonicParsing="false" onAction="#acercadeAcelerator_OnAction" text="Acerca de..." />
             </items>
           </Menu>
         </menus>

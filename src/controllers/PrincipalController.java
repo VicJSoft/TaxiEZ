@@ -14,9 +14,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.interfaces.IAccion;
+import resources.Statics;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class PrincipalController implements Initializable {
@@ -72,6 +74,12 @@ public class PrincipalController implements Initializable {
         //refactorizar, solo copié y pegué
 
         cargarPantalla("Servicios");
+
+    }
+    @FXML
+    void acercadeAcelerator_OnAction(ActionEvent event) {
+        Stage stage = ((Stage)apContenedorSecundario.getScene().getWindow());
+        new Statics().crearConfirmacion(stage,"Acerca de Desarrolladores","Esta aplicación fue desarrollada por VicJsoft Company\nContáctanos al correo: vicjsoft@gmail.com\nDesarrollada en 2020",1);
 
     }
     @FXML
