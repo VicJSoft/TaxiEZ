@@ -20,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import models.Empleado;
 import persistencia.SharePreferences;
 import resources.Statics;
@@ -74,7 +75,6 @@ public class LoginController implements Initializable {
     @FXML
     void btnConfig_OnAction(ActionEvent event) {
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
         Parent parent = null;
         try {
 
@@ -83,6 +83,7 @@ public class LoginController implements Initializable {
 
             Scene scene = new Scene(parent);
             stage.setScene(scene);
+            stage.initStyle(StageStyle.UTILITY);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(btn_login.getScene().getWindow());
             stage.show();

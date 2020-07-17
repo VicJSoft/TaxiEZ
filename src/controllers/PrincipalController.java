@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import models.interfaces.IAccion;
 
 import java.io.IOException;
@@ -101,7 +102,6 @@ public class PrincipalController implements Initializable {
     void miConfiguracion_OnAction(ActionEvent event)
     {
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
         Parent parent = null;
         try {
 
@@ -111,6 +111,7 @@ public class PrincipalController implements Initializable {
             Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.initModality(Modality.WINDOW_MODAL);
+            stage.initStyle(StageStyle.UTILITY);
             stage.initOwner(apContenedorSecundario.getScene().getWindow());
             stage.show();
         } catch (IOException e) {
