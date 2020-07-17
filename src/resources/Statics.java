@@ -112,7 +112,7 @@ public class Statics {
     }
 
 
-    public  Optional<Boolean> crearConfirmacion(Stage stage, String tittle, String body, int opcion){
+    public static  Optional<Boolean> crearConfirmacion(Stage stage, String tittle, String body, int opcion){
 
 
         JFXAlert<Boolean> alert = new JFXAlert<>(stage);

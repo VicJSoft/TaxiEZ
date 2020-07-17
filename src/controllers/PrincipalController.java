@@ -79,7 +79,7 @@ public class PrincipalController implements Initializable {
     @FXML
     void acercadeAcelerator_OnAction(ActionEvent event) {
         Stage stage = ((Stage)apContenedorSecundario.getScene().getWindow());
-        new Statics().crearConfirmacion(stage,"Acerca de Desarrolladores","Esta aplicación fue desarrollada por VicJsoft Company\nContáctanos al correo: vicjsoft@gmail.com\nDesarrollada en 2020",1);
+        Statics.crearConfirmacion(stage,"Acerca de Desarrolladores","Esta aplicación fue desarrollada por VicJsoft Company\nContáctanos al correo: vicjsoft@gmail.com\nDesarrollada en 2020",1);
 
     }
     @FXML
