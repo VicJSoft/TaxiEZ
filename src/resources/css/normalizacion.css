@@ -1,5 +1,5 @@
 *{
-    -boton-color: #5AB444;
+    -boton-color: #713571/*#5AB444*/;
     -boton-color-focused: #5AB44430;
     -borde-text-field: #29156E;
     -borde-text-field-focus: #29156E30;
@@ -89,22 +89,22 @@
 .tittle-bar{
     -fx-background-color: derive(-boton-color,65%);
 }
-
+/*Deprecated*/
 .boton-hamburguesa{
     -fx-background-color: transparent;
     -fx-background-radius:0;
     -fx-border-radius:0;
 }
-
+/*Deprecated*/
 .boton-hamburguesa:hover{
     -fx-background-color: yellowgreen;
     
 }
-
+/*Deprecated*/
 .boton-hamburguesa:pressed{
     -fx-background-color: derive(red,50%);
 }
-
+/*Deprecated*/
 .button-drawer{
     
     -fx-background-color: #FFF;
@@ -114,9 +114,11 @@
     
     
 }
+/*Deprecated*/
 .button-drawer:hover{
     -fx-background-color: derive(-boton-color, 40%);
 }
+/*Deprecated*/
 .button-drawer:pressed{
     -fx-background-color: derive(-boton-color,5%);
     
@@ -179,6 +181,7 @@ que además es independiente a la de sin foco*/
  .jfx-text-field, .jfx-password-field{
      -fx-font-family: gadugi;
      -fx-font-size: 15px;
+     -jfx-focus-color:-boton-color;
      
  }
  
@@ -316,6 +319,16 @@ que además es independiente a la de sin foco*/
 .jfx-combo-box{
     -fx-font-family: gadugi;
     -fx-font-size: 15px;
+
+}
+/*check botton*/
+.jfx-check-box {
+
+    -jfx-checked-color:-boton-color;
+}
+.jfx-check-box:selected .mark {
+
+    -fx-checked-color: -boton-color;
 }
 /*radio button*/
 .customized-jfx-radio-button

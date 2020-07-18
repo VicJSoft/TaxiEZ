@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -891,7 +892,7 @@ public class ServiciosController implements Initializable, IAccion {
                 }
                 return false;
             }
-        },"/views/Cruds/ServicioRegularCRUD.fxml");
+        },"/views/Cruds/ServicioRegularCRUD.fxml","Agregar Servicio");
 
     }
 
@@ -928,7 +929,7 @@ public class ServiciosController implements Initializable, IAccion {
                 return false;
 
             }
-        }, "/views/Cruds/ServicioProgramadoCRUD.fxml");
+        }, "/views/Cruds/ServicioProgramadoCRUD.fxml","Agregar Servicio Programado");
 
 
         System.out.println("Add servicio programado .");
@@ -985,6 +986,7 @@ public class ServiciosController implements Initializable, IAccion {
             Stage primaryStage = new Stage();
             // Parent root = FXMLLoader.load(getClass().getResource("/views/Cruds/taxisCRUD.fxml"));
             primaryStage.setTitle("Asignar unidad");
+            primaryStage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
             Scene scene = new Scene(contenedorAsignarUnidad);
             scene.getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), new Runnable() {
                 @Override
@@ -1139,7 +1141,7 @@ public class ServiciosController implements Initializable, IAccion {
     }
 
 
-    private void abrirVentanaCrud(ActionEvent event, AddRegistro addRegistro,String resourceCRUDView){
+    private void abrirVentanaCrud(ActionEvent event, AddRegistro addRegistro,String resourceCRUDView,String titulo){
         try {
 
             FXMLLoader controladorLoader = new FXMLLoader(getClass().getResource(resourceCRUDView));
@@ -1150,7 +1152,8 @@ public class ServiciosController implements Initializable, IAccion {
 
             Stage primaryStage = new Stage();
             // Parent root = FXMLLoader.load(getClass().getResource("/views/Cruds/taxisCRUD.fxml"));
-            primaryStage.setTitle("Servicios");
+            primaryStage.setTitle(titulo);
+            primaryStage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
             Scene scene = new Scene(contenedorServicioRegularCRUD);
             scene.getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), new Runnable() {
                 @Override

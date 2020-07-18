@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.image.Image?>
@@ -42,6 +43,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Agregar Taxista" />
+               </tooltip>
             </JFXButton>
             <JFXButton fx:id="button_eliminarTaxista" ellipsisString="" onAction="#btnEliminarTaxista_OnAction">
                <graphic>
@@ -51,6 +55,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Eliminar Taxista" />
+               </tooltip>
             </JFXButton>
             <JFXButton fx:id="button_actualizarTaxista" ellipsisString="" onAction="#btnActualizarTaxista_OnAction">
                <graphic>
@@ -60,6 +67,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Actualizar Taxista" />
+               </tooltip>
             </JFXButton>
          </children>
       </HBox>

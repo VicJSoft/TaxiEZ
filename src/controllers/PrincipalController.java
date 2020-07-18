@@ -114,7 +114,7 @@ public class PrincipalController implements Initializable {
         Parent parent = null;
         try {
 
-            parent = FXMLLoader.load(getClass().getResource("/views/Configuración.fxml"));
+            parent = FXMLLoader.load(getClass().getResource("/views/Configuracion.fxml"));
             stage.setTitle("Configuración");
 
             Scene scene = new Scene(parent);

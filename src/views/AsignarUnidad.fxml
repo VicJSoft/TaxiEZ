@@ -25,7 +25,7 @@
                   <Image url="@../resources/imagenes/ok_icon.png" />
                </image>
             </ImageView>
-            <Label fx:id="lbl_tittleBar" layoutX="35.0" layoutY="2.0" prefHeight="30.0" prefWidth="172.0" text="Aplicar servicio" textFill="#828282">
+            <Label fx:id="lbl_tittleBar" layoutX="35.0" layoutY="2.0" prefHeight="30.0" prefWidth="172.0" text="Aplicar servicio" textFill="WHITE">
                <font>
                   <Font name="Gadugi" size="20.0" />
                </font>

@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseButton;
@@ -133,16 +134,20 @@ public class ClientesController implements Initializable,IAccion {
             });
 
             return row;
+
+
         });
     }
 
     @Override
     public void accionPrimaria() {
+
         this.button_agregarCliente.fire();
     }
 
     @Override
     public void accionSecundaria() {
+
         this.button_eliminarCliente.fire();
     }
 
@@ -163,7 +168,7 @@ public class ClientesController implements Initializable,IAccion {
                 }
                 return false;
             }
-        });
+        }, "Actualizar Cliente");
     }
 
     @FXML
@@ -179,7 +184,7 @@ public class ClientesController implements Initializable,IAccion {
                 return false;
 
             }
-        });
+        },"Agregar Cliente");
     }
 
     @FXML
@@ -190,7 +195,7 @@ public class ClientesController implements Initializable,IAccion {
         }
     }
 
-    private void abrirVentanaCrud(ActionEvent event, AddRegistro addRegistro){
+    private void abrirVentanaCrud(ActionEvent event, AddRegistro addRegistro, String titulo){
         try {
 
             FXMLLoader controladorLoader = new FXMLLoader(getClass().getResource("/views/Cruds/ClientesCRUD.fxml"));
@@ -200,8 +205,9 @@ public class ClientesController implements Initializable,IAccion {
             clientesCrudController.setAddRegistroListener(addRegistro);
 
             Stage primaryStage = new Stage();
+            primaryStage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
             // Parent root = FXMLLoader.load(getClass().getResource("/views/Cruds/taxisCRUD.fxml"));
-            primaryStage.setTitle("Taxis añadir");
+            primaryStage.setTitle(titulo);
             Scene scene = new Scene(contenedorCRUDClientes);
             scene.getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), new Runnable() {
                 @Override
@@ -220,6 +226,8 @@ public class ClientesController implements Initializable,IAccion {
             e.printStackTrace();
         }
     }
+
+
 
 }
 

@@ -147,7 +147,7 @@ public class LoginController implements Initializable {
             Stage stage = new Stage();
             stage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
             Parent parent = FXMLLoader.load(getClass().getResource("/views/Principal.fxml"));
-            stage.setTitle("Taxis");
+            stage.setTitle("Servicios");
             if(cb_recordar.isSelected())
             {
                 setCredenciales();

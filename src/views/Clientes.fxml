@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.image.Image?>
@@ -41,6 +42,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Agregar Cliente" />
+               </tooltip>
             </JFXButton>
             <JFXButton fx:id="button_eliminarCliente" ellipsisString="" onAction="#btnDeleteCliente_OnAction" prefHeight="58.0" prefWidth="0.0">
                <graphic>
@@ -50,6 +54,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Eliminar Cliente" />
+               </tooltip>
             </JFXButton>
             <JFXButton fx:id="button_actualizarCliente" ellipsisString="" onAction="#btnActualizarCliente_OnAction" prefHeight="58.0" prefWidth="49.0">
                <graphic>
@@ -59,6 +66,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Actualizar Cliente" />
+               </tooltip>
             </JFXButton>
          </children>
       </HBox>

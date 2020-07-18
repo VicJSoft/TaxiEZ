@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.image.Image?>
@@ -42,6 +43,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Agregar Empleado" />
+               </tooltip>
             </JFXButton>
             <JFXButton fx:id="button_eliminarEmpleado" ellipsisString="" onAction="#btnEliminarEmpleado_OnAction">
                <graphic>
@@ -51,6 +55,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Eliminar Empleado" />
+               </tooltip>
             </JFXButton>
             <JFXButton fx:id="button_actualizarEmpleado" ellipsisString="" onAction="#btnActualizarEmpleado_OnAction" prefHeight="41.0" prefWidth="44.0">
                <graphic>
@@ -60,6 +67,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Actualizar Empleado" />
+               </tooltip>
             </JFXButton>
          </children>
       </HBox>

@@ -16,6 +16,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseButton;
@@ -169,7 +170,7 @@ public class EmpleadosController  implements Initializable, IAccion {
                 }
                 return false;
             }
-        });
+        },"Agregar Empleados");
     }
 
     @FXML
@@ -195,10 +196,10 @@ public class EmpleadosController  implements Initializable, IAccion {
                 }
                 return false;
             }
-        });
+        },"Actualizar Empleados");
     }
 
-    private void abrirVentanaCrud(ActionEvent event, AddRegistro addRegistro){
+    private void abrirVentanaCrud(ActionEvent event, AddRegistro addRegistro,String titulo){
         try {
 
             FXMLLoader controladorLoader = new FXMLLoader(getClass().getResource("/views/Cruds/EmpleadosCRUD.fxml"));
@@ -209,7 +210,8 @@ public class EmpleadosController  implements Initializable, IAccion {
 
             Stage primaryStage = new Stage();
             // Parent root = FXMLLoader.load(getClass().getResource("/views/Cruds/taxisCRUD.fxml"));
-            primaryStage.setTitle("Empleados");
+            primaryStage.getIcons().add(new Image("/resources/imagenes/iconos/Taxi/taxi.png"));
+            primaryStage.setTitle(titulo);
             Scene scene = new Scene(contenedor);
             scene.getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), new Runnable() {
                 @Override
