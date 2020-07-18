@@ -1135,7 +1135,7 @@ public class ServiciosController implements Initializable, IAccion {
             }
         }
 
-        System.out.println("FInalizar servicio programado.");
+        System.out.println("Finalizar servicio programado.");
     }
 
 

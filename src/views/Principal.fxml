@@ -50,7 +50,7 @@
                         <KeyCodeCombination alt="UP" code="F5" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem fx:id="miEstadisticas" mnemonicParsing="false" onAction="#estadisticasAcelerator_OnAction" text="Estadisticas">
+                  <MenuItem fx:id="miEstadisticas" mnemonicParsing="false" onAction="#estadisticasAcelerator_OnAction" text="Estadísticas">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="F6" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>

@@ -75,6 +75,7 @@ public class PrincipalController implements Initializable {
 
         cargarPantalla("Servicios");
 
+
     }
     @FXML
     void acercadeAcelerator_OnAction(ActionEvent event) {
@@ -113,8 +114,8 @@ public class PrincipalController implements Initializable {
         Parent parent = null;
         try {
 
-            parent = FXMLLoader.load(getClass().getResource("/views/Configuracion.fxml"));
-            stage.setTitle("Taxis");
+            parent = FXMLLoader.load(getClass().getResource("/views/Configuración.fxml"));
+            stage.setTitle("Configuración");
 
             Scene scene = new Scene(parent);
             stage.setScene(scene);
@@ -129,12 +130,16 @@ public class PrincipalController implements Initializable {
     }
     @FXML
     void serviciosAcelerator_OnAction(ActionEvent event) {
+
         cargarPantalla("Servicios");
+        setTitle("Servicios");
     }
 
     @FXML
     void clientesAcelerator_OnAction(ActionEvent event) {
+
         cargarPantalla("Clientes");
+        setTitle("Clientes");
     }
 
     @FXML
@@ -145,19 +150,22 @@ public class PrincipalController implements Initializable {
     @FXML
     void estadisticasAcelerator_OnAction(ActionEvent event) {
         cargarPantalla("Estadisticas");
+        setTitle("Estadísticas");
 
     }
 
     @FXML
     void taxisAcelerator_OnAction(ActionEvent event) {
-        cargarPantalla("Taxis");
 
+        cargarPantalla("Taxis");
+        setTitle("Taxis");
     }
 
     @FXML
     void taxistasAcelerator_OnAction(ActionEvent event) {
 
         cargarPantalla("Taxistas");
+        setTitle("Taxistas");
     }
 
 
@@ -190,6 +198,7 @@ public class PrincipalController implements Initializable {
     private void cargarPantalla(String pantallaName){
         try {
 
+
             FXMLLoader controladorLoader = new FXMLLoader(getClass().getResource("/views/"+pantallaName+".fxml"));
             AnchorPane contenedor = controladorLoader.load();
             controladorActual = controladorLoader.getController();
@@ -200,6 +209,10 @@ public class PrincipalController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void setTitle(String pantallaName)
+    {
+        ((Stage)apContenedorSecundario.getScene().getWindow()).setTitle(pantallaName);
     }
 
 }
