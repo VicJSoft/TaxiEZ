@@ -320,6 +320,12 @@ que además es independiente a la de sin foco*/
 .jfx-combo-box{
     -fx-font-family: gadugi;
     -fx-font-size: 15px;
+    -jfx-focused-color:-boton-color;
+
+}
+.jfx-combo-box:focused{
+
+    -jfx-focused-color:-boton-color;
 
 }
 /*check botton*/

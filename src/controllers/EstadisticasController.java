@@ -118,18 +118,21 @@ public class EstadisticasController implements Initializable, IAccion {
                    columnaCondicion = "unidad.idUnidad";
                    ObservableList<Taxi> taxis = new TaxisSQL().getTaxis();
                    lista.addAll(taxis);
+                   comboBox_multiple.setLabelFloat(true);
                    comboBox_multiple.setPromptText("Seleccione unidad");
 
                }else if(selectedIndex == 1){
                    columnaCondicion = "servicio.idCliente";
                    ObservableList<Cliente> clientes = new ClienteSQL().getClientes();
                    lista.addAll(clientes);
+                   comboBox_multiple.setLabelFloat(true);
                    comboBox_multiple.setPromptText("Seleccione cliente");
 
                }else if(selectedIndex == 2){
                    columnaCondicion = "servicio.idEmpleado";
                    ObservableList<Empleado> empleados = new EmpleadoSQL().getEmpleados();
                    lista.addAll(empleados);
+                   comboBox_multiple.setLabelFloat(true);
                    comboBox_multiple.setPromptText("Seleccione Empleado");
                }
                comboBox_multiple.setItems( lista );
@@ -173,63 +176,78 @@ public class EstadisticasController implements Initializable, IAccion {
         LocalDate valueInicio = dp_fechaInicio.getValue();
         LocalDate valueFin = dp_fechaFin.getValue();
         XYChart.Series series = new XYChart.Series();
-
-        if(valueInicio!=null && valueFin!=null)
+        if(dp_fechaInicio.getValue()!=null && dp_fechaFin.getValue()!=null)
         {
-            if(comboBox_tipoReporte.getSelectionModel().getSelectedIndex()>0 && comboBox_multiple.getSelectionModel().getSelectedIndex()>0)
+
+            if(comboBox_tipoReporte.getSelectionModel().getSelectedIndex()>-1 && comboBox_multiple.getSelectionModel().getSelectedIndex()>-1)
             {
+                if(valueInicio.isBefore(valueFin))
+                {
+                    while (valueInicio.isBefore(valueFin) || valueInicio.isEqual(valueFin)) {
 
-                while (valueInicio.isBefore(valueFin) || valueInicio.isEqual(valueFin)) {
-
-                    try {
-                        int conteo = new ServicioRegularSQL().getServiciosAplicadosSegunFiltro(columnaCondicion, valorCondicion, valueInicio);
-                        XYChart.Data punto = new XYChart.Data(valueInicio.toString(), conteo);
-                        punto.setNode(new HoveredThresholdNode((Integer) punto.getYValue()));
-
-                        series.getData().add(punto);
-
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                        try {
+                            int conteo = new ServicioRegularSQL().getServiciosAplicadosSegunFiltro(columnaCondicion, valorCondicion, valueInicio);
+                            XYChart.Data punto = new XYChart.Data(valueInicio.toString(), conteo);
+                            punto.setNode(new HoveredThresholdNode((Integer) punto.getYValue()));
+                            series.getData().add(punto);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        valueInicio = valueInicio.plusDays(1);
                     }
+                    linechart.getData().clear();
+                    linechart.getData().add(series);
+                }
+                else
+                {
+                    Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Error","La fecha de inicio es mayor que la fecha de fin",1);
 
-
-                    valueInicio = valueInicio.plusDays(1);
                 }
             }
             else
             {
-                Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione..","Necesita selecciona el tipo de reporte y de quien necesita el reporte",1);
-                if(comboBox_multiple.getSelectionModel().getSelectedIndex()<0 && comboBox_tipoReporte.getSelectionModel().getSelectedIndex()>0)
+                if(comboBox_multiple.getSelectionModel().getSelectedIndex()<0 && comboBox_tipoReporte.getSelectionModel().getSelectedIndex()>-1)
                 {
+                    Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione...","Necesita selecciona de quien necesita el reporte",1);
                     comboBox_multiple.requestFocus();
                 }
                 else if(comboBox_multiple.getSelectionModel().getSelectedIndex()>0 && comboBox_tipoReporte.getSelectionModel().getSelectedIndex()<0)
                 {
+                    Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione...","Necesita selecciona el tipo de reporte",1);
+
                     comboBox_tipoReporte.requestFocus();
                 }
                 else
                 {
+                    Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione...","Necesita selecciona el tipo de reporte y de quien quiere el reporte",1);
+
                     comboBox_tipoReporte.requestFocus();
                 }
 
             }
 
         }
-        else if(valueInicio!=null && valueFin==null)
+        else
         {
-            Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione una fecha","Necesita ingresar la fecha final",1);
-            dp_fechaFin.requestFocus();
+            if(valueFin==null && valueInicio==null)
+            {
+                Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione una fecha","Necesita ingresar la fecha inicio y fin",1);
+                dp_fechaFin.requestFocus();
 
+            }
+            else if(valueInicio==null  && valueFin!=null)
+            {
+                Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione una fecha","Necesita ingresar la fecha de inicio",1);
+                dp_fechaInicio.requestFocus();
+            }
+            else
+            {
+                Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione una fecha","Necesita ingresar la fecha de fin",1);
+                dp_fechaFin.requestFocus();
+            }
         }
-        else if(valueInicio==null && valueFin!=null)
-        {
-            Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione una fecha","Necesita ingresar la fecha de inicio",1);
-            dp_fechaInicio.requestFocus();
 
-        }
 
-        linechart.getData().clear();
-        linechart.getData().add(series);
 
     }
 

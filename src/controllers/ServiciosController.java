@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,9 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -38,7 +37,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -576,14 +574,61 @@ public class ServiciosController implements Initializable, IAccion {
 
         tablaServicioProgr.setRowFactory(new Callback<TreeTableView<ServiciosProgramado>, TreeTableRow<ServiciosProgramado>>() {
             @Override
-            public TreeTableRow<ServiciosProgramado> call(TreeTableView<ServiciosProgramado> param) {
+            public TreeTableRow<ServiciosProgramado> call(TreeTableView<ServiciosProgramado> param)
+            {
+                JFXTreeTableRow<ServiciosProgramado> row = new JFXTreeTableRow<>();
+                row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
 
-                return new TreeTableRow<ServiciosProgramado>(){
+                        //si un registro es seleccionado con el secundario se cancela hoy
+                        if (!row.isEmpty() && event.getButton() == MouseButton.SECONDARY )
+                        {
+
+                            Optional<Boolean> resultConfirmacion =
+                                    Statics.crearConfirmacion((Stage) btnCancelServicio.getScene().getWindow(), "Cancelación de Servicio para hoy", "Se cancelará el servicio para el día de hoy \n ¿Desea continuar?", 2);
+                            //por si solo se cierra la ventana.
+
+                            //si la confimaición da false entonces el borrado queda cancelado.
+                            if (resultConfirmacion.isPresent())
+                            {
+                                if (resultConfirmacion.get())
+                                {
+                                    ServiciosProgramado serviciosProgramadoSelected = tablaServicioProgr.getSelectionModel().getSelectedItem().getValue();
+                                    ServicioRegular servicioRegularGenerado = serviciosProgramadoSelected.generarServicioRegular(true);
+                                    ServicioRegularSQL servicioRegularSQL = new ServicioRegularSQL();
+
+                                    if(servicioRegularSQL.insertarServicioRegular(servicioRegularGenerado))
+                                    {
+                                        Statics.crearConfirmacion((Stage)btnCancelServicio.getScene().getWindow(),"Cancelación de servicio","El servicio se ha cancelado para el día de hoy",1);
+                                    }
+                                }
+                            }
+
+                        }
+                        //si un registro es seleccionado con el primario doble clic
+                        else if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+                        {
+
+                            System.out.println(tablaServicioProgr.getSelectionModel().getSelectedIndex());
+                            btnAplicarServicioProgramado.fire();
+
+                        }
+
+
+                    }
+                });
+
+                return row;
+
+                /*return new TreeTableRow<ServiciosProgramado>()
+                {
                     @Override
                     protected void updateItem(ServiciosProgramado item, boolean empty) {
-                        if(!empty && item!=null)super.updateItem(item, empty);
+                        if(!empty && item!=null)
+                            super.updateItem(item, empty);
                     }
-                };
+                };*/
             }
         });
 
@@ -1031,14 +1076,24 @@ public class ServiciosController implements Initializable, IAccion {
             // if(true)
             //   return;
             TreeItem<ServiciosProgramado> serviciosProgramadoTreeItem = tablaServicioProgr.getSelectionModel().getSelectedItem();
+            LocalDate localDateservicio;
+            if(serviciosProgramadoTreeItem.getValue().getFechaUltimaAplicacion()!=null)
+            {
+                localDateservicio = LocalDate.from(serviciosProgramadoTreeItem.getValue().getFechaUltimaAplicacion());
+            }
+            else {
+                localDateservicio=null;
+            }
 
-            if (serviciosProgramadoTreeItem.getValue().getFechaUltimaAplicacion()==null)
+
+            if (localDateservicio==null)
             {
                  aplicacion_servicio(serviciosProgramadoTreeItem.getValue());
 
             }
-            else if(serviciosProgramadoTreeItem.getValue().getFechaUltimaAplicacion().isBefore(null))
+            else if(localDateservicio.isBefore(LocalDate.now()))
             {
+
                 aplicacion_servicio(serviciosProgramadoTreeItem.getValue());
             }
             else
@@ -1059,7 +1114,7 @@ public class ServiciosController implements Initializable, IAccion {
             AsignarUnidadController asignarUnidadController = controladorLoader.getController();
 
             ServiciosProgramado serviciosProgramadoSelected = tablaServicioProgr.getSelectionModel().getSelectedItem().getValue();
-            ServicioRegular servicioRegularGenerado = serviciosProgramadoSelected.generarServicioRegular();
+            ServicioRegular servicioRegularGenerado = serviciosProgramadoSelected.generarServicioRegular(true);
 
 
             new ServicioRegularSQL().insertarServicioRegular(servicioRegularGenerado);//lo inserta en servicios regulares pendientes.
@@ -1161,30 +1216,40 @@ public class ServiciosController implements Initializable, IAccion {
 
         if(!tablaServicioProgr.getSelectionModel().isEmpty()) {
 
-            Optional<Boolean> resultConfirmacion =
-                    Statics.crearConfirmacion((Stage) btnCancelServicio.getScene().getWindow(), "Cancelación de Servicio programado", "Se cancelará el servicio programado de manera permanente \n ¿Desea continuar?", 2);
-            //por si solo se cierra la ventana.
+
 
             //si la confimaición da false entonces el borrado queda cancelado.
-            if (resultConfirmacion.isPresent()) {
-                if (resultConfirmacion.get())
-                {
-                    ServiciosProgramado serviciosProgramado = tablaServicioProgr.getSelectionModel().getSelectedItem().getValue();
+            ServiciosProgramado serviciosProgramado = tablaServicioProgr.getSelectionModel().getSelectedItem().getValue();
 
-                    try {
-                        if(serviciosProgramado.getFechaFin()==null)
-                            if(new ServicioProgramadoSQL().terminarProgramacionServicio(serviciosProgramado)){
+            if(serviciosProgramado.getFechaFin()==null)
+            {
+                Optional<Boolean> resultConfirmacion =
+                        Statics.crearConfirmacion((Stage) btnCancelServicio.getScene().getWindow(), "Cancelación de Servicio programado", "Se cancelará el servicio programado de manera permanente \n ¿Desea continuar?", 2);
+                //por si solo se cierra la ventana.
+                if (resultConfirmacion.isPresent()) {
+                    if (resultConfirmacion.get())
+                    {
+                        try {
 
-                                tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(null);
-                                tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(serviciosProgramado);
-                                // if(listaServicioProgramado.size()<30)
-                                //tablaServicioProgr.refresh();
+                                if (new ServicioProgramadoSQL().terminarProgramacionServicio(serviciosProgramado)) {
 
-                            }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                                    tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(null);
+                                    tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(serviciosProgramado);
+                                    // if(listaServicioProgramado.size()<30)
+                                    //tablaServicioProgr.refresh();
+
+                                }
+
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
+            }
+            else
+            {
+                Statics.crearConfirmacion((Stage)btnCancelServicio.getScene().getWindow(),"Servicio Terminado","El servicio fue cancelado de manera permanente",1);
+
             }
 
         }

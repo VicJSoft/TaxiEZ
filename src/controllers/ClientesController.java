@@ -7,6 +7,7 @@ import controllers.crudsControllers.ClientesCrudController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -106,38 +108,43 @@ public class ClientesController implements Initializable,IAccion {
         });
 
         //definir una fila de fabrica.
-        table_view_clientes.setRowFactory((param) -> {
-            // TableRow<Empleados> row = new TableRow<>();
-            JFXTreeTableRow<Cliente> row = new JFXTreeTableRow<>();
+        table_view_clientes.setRowFactory(new Callback<TreeTableView<Cliente>, TreeTableRow<Cliente>>() {
+            @Override
+            public TreeTableRow<Cliente> call(TreeTableView<Cliente> param) {
+                // TableRow<Empleados> row = new TableRow<>();
+                JFXTreeTableRow<Cliente> row = new JFXTreeTableRow<>();
 
-          //  row.setPrefHeight(row.getTreeItem().getGraphic().);
+                //  row.setPrefHeight(row.getTreeItem().getGraphic().);
 
-            row.setOnMouseClicked(event->{
+                row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
 
-                //si un registro es seleccionado con 1 o 2 clic
-                if(! row.isEmpty() && event.getButton()== MouseButton.PRIMARY && event.getClickCount() == 2){
-                    Cliente clickedRow = row.getItem();
-              //      btnDelete_Cliente.disableProperty().set(false);
-                //    btnEdit_Cliente.disableProperty().set(false);
-                  //  System.out.println(clickedRow.getNombre());
-                    //abrirá la ventana para edición
-                    button_actualizarCliente.fire();
+                        //si un registro es seleccionado con 1 o 2 clic
+                        if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                            Cliente clickedRow = row.getItem();
+                            //      btnDelete_Cliente.disableProperty().set(false);
+                            //    btnEdit_Cliente.disableProperty().set(false);
+                            //  System.out.println(clickedRow.getNombre());
+                            //abrirá la ventana para edición
+                            button_actualizarCliente.fire();
 
-                }else
-                if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY && event.getClickCount() == 1) {
+                        } else if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
 
-                    ////  Empleados clickedRow = row.getItem();
-                  //  btnDelete_Cliente.disableProperty().set(false);
-                   // btnEdit_Cliente.disableProperty().set(false);
-                   // //System.out.println(clickedRow.getNombre());
-                }
-
-
-            });
-
-            return row;
+                            ////  Empleados clickedRow = row.getItem();
+                            //  btnDelete_Cliente.disableProperty().set(false);
+                            // btnEdit_Cliente.disableProperty().set(false);
+                            // //System.out.println(clickedRow.getNombre());
+                        }
 
 
+                    }
+                });
+
+                return row;
+
+
+            }
         });
     }
 

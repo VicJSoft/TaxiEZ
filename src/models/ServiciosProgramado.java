@@ -2,12 +2,10 @@ package models;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 import resources.Statics;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -188,11 +186,11 @@ public class ServiciosProgramado extends Servicio<ServiciosProgramado> {
     }
 
 
-    public ServicioRegular generarServicioRegular(){
+    public ServicioRegular generarServicioRegular(boolean isCancelado){
         ServicioRegular servicioRegular =
                 new ServicioRegular(this.getNombre(),this.getObservaciones(),this.getDireccion(),0,
                         LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(),
-                        false,this.getCliente(), Statics.empleadoSesionActual);
+                        isCancelado,this.getCliente(), Statics.empleadoSesionActual);
 
         return  servicioRegular;
     }

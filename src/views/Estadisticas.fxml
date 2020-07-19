@@ -22,8 +22,8 @@
           <NumberAxis id="y" fx:id="yAxis" side="LEFT" />
         </yAxis>
       </LineChart>
-      <JFXComboBox fx:id="comboBox_tipoReporte" focusColor="#5ab444" labelFloat="true" layoutX="582.0" layoutY="71.0" prefHeight="31.0" prefWidth="267.0" promptText="Tipo de reporte" styleClass="jfx-combo-box" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="71.0" />
-      <JFXComboBox fx:id="comboBox_multiple" focusColor="#5ab444" labelFloat="true" layoutX="661.0" layoutY="125.0" prefHeight="31.0" prefWidth="267.0" styleClass="jfx-combo-box" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="125.0" />
+      <JFXComboBox fx:id="comboBox_tipoReporte" focusColor="#713571" labelFloat="true" layoutX="582.0" layoutY="71.0" prefHeight="31.0" prefWidth="267.0" promptText="Tipo de reporte" styleClass="jfx-combo-box" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="71.0" />
+      <JFXComboBox fx:id="comboBox_multiple" focusColor="#713571" labelFloat="true" layoutX="661.0" layoutY="125.0" prefHeight="31.0" prefWidth="267.0" styleClass="jfx-combo-box" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="125.0" />
       <JFXDatePicker fx:id="dp_fechaInicio" layoutX="53.0" layoutY="125.0" promptText="Fecha Inicio" />
       <JFXDatePicker fx:id="dp_fechaFin" layoutX="292.0" layoutY="125.0" promptText="Fecha Fin" />
       <Label layoutX="32.0" layoutY="16.0" styleClass="titulo" text="Estadísticas">

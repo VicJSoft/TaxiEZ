@@ -87,6 +87,6 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="apContenedorSecundario" layoutY="28.0" prefHeight="705.0" prefWidth="1103.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
+      <AnchorPane fx:id="apContenedorSecundario" layoutY="28.0" prefHeight="705.0" prefWidth="1103.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
    </children>
 </AnchorPane>
