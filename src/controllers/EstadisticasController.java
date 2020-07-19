@@ -109,8 +109,8 @@ public class EstadisticasController implements Initializable, IAccion {
        comboBox_tipoReporte.setOnAction(new EventHandler<ActionEvent>() {
            @Override
            public void handle(ActionEvent event) {
-              //evaluarReporte(comboBox_tipoReporte.getSelectionModel().getSelectedItem());
-               comboBox_multiple.getSelectionModel().clearSelection();;
+
+               comboBox_multiple.getSelectionModel().clearSelection();
                comboBox_multiple.setItems(null);
                int selectedIndex = comboBox_tipoReporte.getSelectionModel().getSelectedIndex();
                ObservableList<Registro> lista = FXCollections.observableArrayList();
@@ -118,24 +118,28 @@ public class EstadisticasController implements Initializable, IAccion {
                    columnaCondicion = "unidad.idUnidad";
                    ObservableList<Taxi> taxis = new TaxisSQL().getTaxis();
                    lista.addAll(taxis);
-                   comboBox_multiple.setLabelFloat(true);
-                   comboBox_multiple.setPromptText("Seleccione unidad");
+                   //System.out.println(taxis.get(0));
+                   //comboBox_multiple.setPromptText(comboBox_multiple.getPromptText()+" la Unidad");
 
                }else if(selectedIndex == 1){
                    columnaCondicion = "servicio.idCliente";
                    ObservableList<Cliente> clientes = new ClienteSQL().getClientes();
                    lista.addAll(clientes);
-                   comboBox_multiple.setLabelFloat(true);
-                   comboBox_multiple.setPromptText("Seleccione cliente");
+                   //System.out.println(clientes.get(0));
+                   //comboBox_multiple.setPromptText(comboBox_multiple.getPromptText()+"l Cliente");
 
                }else if(selectedIndex == 2){
                    columnaCondicion = "servicio.idEmpleado";
                    ObservableList<Empleado> empleados = new EmpleadoSQL().getEmpleados();
+                   //System.out.println(empleados.get(0));
                    lista.addAll(empleados);
-                   comboBox_multiple.setLabelFloat(true);
-                   comboBox_multiple.setPromptText("Seleccione Empleado");
+
+                   //comboBox_multiple.setPromptText(comboBox_multiple.getPromptText()+"l Empleado");
+
                }
+               comboBox_multiple.requestFocus();
                comboBox_multiple.setItems( lista );
+
 
            }
        });
@@ -178,19 +182,21 @@ public class EstadisticasController implements Initializable, IAccion {
         XYChart.Series series = new XYChart.Series();
         if(dp_fechaInicio.getValue()!=null && dp_fechaFin.getValue()!=null)
         {
-
             if(comboBox_tipoReporte.getSelectionModel().getSelectedIndex()>-1 && comboBox_multiple.getSelectionModel().getSelectedIndex()>-1)
             {
                 if(valueInicio.isBefore(valueFin))
                 {
-                    while (valueInicio.isBefore(valueFin) || valueInicio.isEqual(valueFin)) {
-
-                        try {
+                    while (valueInicio.isBefore(valueFin) || valueInicio.isEqual(valueFin))
+                    {
+                        try
+                        {
                             int conteo = new ServicioRegularSQL().getServiciosAplicadosSegunFiltro(columnaCondicion, valorCondicion, valueInicio);
                             XYChart.Data punto = new XYChart.Data(valueInicio.toString(), conteo);
                             punto.setNode(new HoveredThresholdNode((Integer) punto.getYValue()));
                             series.getData().add(punto);
-                        } catch (SQLException e) {
+                        }
+                        catch (SQLException e)
+                        {
                             e.printStackTrace();
                         }
                         valueInicio = valueInicio.plusDays(1);
@@ -201,7 +207,6 @@ public class EstadisticasController implements Initializable, IAccion {
                 else
                 {
                     Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Error","La fecha de inicio es mayor que la fecha de fin",1);
-
                 }
             }
             else
@@ -214,13 +219,11 @@ public class EstadisticasController implements Initializable, IAccion {
                 else if(comboBox_multiple.getSelectionModel().getSelectedIndex()>0 && comboBox_tipoReporte.getSelectionModel().getSelectedIndex()<0)
                 {
                     Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione...","Necesita selecciona el tipo de reporte",1);
-
                     comboBox_tipoReporte.requestFocus();
                 }
                 else
                 {
                     Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione...","Necesita selecciona el tipo de reporte y de quien quiere el reporte",1);
-
                     comboBox_tipoReporte.requestFocus();
                 }
 
