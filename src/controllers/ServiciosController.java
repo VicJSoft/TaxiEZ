@@ -1235,8 +1235,19 @@ public class ServiciosController implements Initializable, IAccion {
 
                                     tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(null);
                                     tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(serviciosProgramado);
+
                                     // if(listaServicioProgramado.size()<30)
                                     //tablaServicioProgr.refresh();
+
+                                    listaServicioProgramado.clear();
+                                    listaServicioProgramado = new ServicioProgramadoSQL().getServiciosProgramados();
+
+                                    this.tablaServicioProgr.setRoot(null);
+                                    TreeItem<ServiciosProgramado> serviciosProgramadoRecursiveTreeItem =
+                                            new RecursiveTreeItem<>(listaServicioProgramado, (recursiveTreeObject) -> recursiveTreeObject.getChildren());
+
+                                    this.tablaServicioProgr.setRoot(serviciosProgramadoRecursiveTreeItem);
+                                    this.tablaServicioProgr.setShowRoot(false);
 
                                 }
 
