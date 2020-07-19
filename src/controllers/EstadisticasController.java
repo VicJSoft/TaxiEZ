@@ -24,19 +24,18 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import models.Cliente;
 import models.Empleado;
 import models.Taxi;
 import models.interfaces.IAccion;
 import models.interfaces.Registro;
+import resources.Statics;
 import services.sql.ClienteSQL;
 import services.sql.EmpleadoSQL;
 import services.sql.ServicioRegularSQL;
@@ -60,6 +59,9 @@ public class EstadisticasController implements Initializable, IAccion {
 
     @FXML
     public ToggleGroup tipoServicio;
+
+    @FXML
+    private Button btnGenerar;
 
     @FXML
     public JFXRadioButton rbProgramado;
@@ -116,16 +118,19 @@ public class EstadisticasController implements Initializable, IAccion {
                    columnaCondicion = "unidad.idUnidad";
                    ObservableList<Taxi> taxis = new TaxisSQL().getTaxis();
                    lista.addAll(taxis);
+                   comboBox_multiple.setPromptText("Seleccione unidad");
 
                }else if(selectedIndex == 1){
                    columnaCondicion = "servicio.idCliente";
                    ObservableList<Cliente> clientes = new ClienteSQL().getClientes();
                    lista.addAll(clientes);
+                   comboBox_multiple.setPromptText("Seleccione cliente");
 
                }else if(selectedIndex == 2){
                    columnaCondicion = "servicio.idEmpleado";
                    ObservableList<Empleado> empleados = new EmpleadoSQL().getEmpleados();
                    lista.addAll(empleados);
+                   comboBox_multiple.setPromptText("Seleccione Empleado");
                }
                comboBox_multiple.setItems( lista );
 
@@ -169,26 +174,62 @@ public class EstadisticasController implements Initializable, IAccion {
         LocalDate valueFin = dp_fechaFin.getValue();
         XYChart.Series series = new XYChart.Series();
 
-        while(valueInicio.isBefore(valueFin)||valueInicio.isEqual(valueFin)){
+        if(valueInicio!=null && valueFin!=null)
+        {
+            if(comboBox_tipoReporte.getSelectionModel().getSelectedIndex()>0 && comboBox_multiple.getSelectionModel().getSelectedIndex()>0)
+            {
 
-            try {
-                int conteo = new ServicioRegularSQL().getServiciosAplicadosSegunFiltro(columnaCondicion, valorCondicion, valueInicio);
-                XYChart.Data punto = new XYChart.Data(valueInicio.toString(), conteo);
-                punto.setNode(new HoveredThresholdNode((Integer) punto.getYValue()));
+                while (valueInicio.isBefore(valueFin) || valueInicio.isEqual(valueFin)) {
 
-                series.getData().add(punto);
+                    try {
+                        int conteo = new ServicioRegularSQL().getServiciosAplicadosSegunFiltro(columnaCondicion, valorCondicion, valueInicio);
+                        XYChart.Data punto = new XYChart.Data(valueInicio.toString(), conteo);
+                        punto.setNode(new HoveredThresholdNode((Integer) punto.getYValue()));
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                        series.getData().add(punto);
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    valueInicio = valueInicio.plusDays(1);
+                }
+            }
+            else
+            {
+                Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione..","Necesita selecciona el tipo de reporte y de quien necesita el reporte",1);
+                if(comboBox_multiple.getSelectionModel().getSelectedIndex()<0 && comboBox_tipoReporte.getSelectionModel().getSelectedIndex()>0)
+                {
+                    comboBox_multiple.requestFocus();
+                }
+                else if(comboBox_multiple.getSelectionModel().getSelectedIndex()>0 && comboBox_tipoReporte.getSelectionModel().getSelectedIndex()<0)
+                {
+                    comboBox_tipoReporte.requestFocus();
+                }
+                else
+                {
+                    comboBox_tipoReporte.requestFocus();
+                }
+
             }
 
+        }
+        else if(valueInicio!=null && valueFin==null)
+        {
+            Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione una fecha","Necesita ingresar la fecha final",1);
+            dp_fechaFin.requestFocus();
 
-            valueInicio = valueInicio.plusDays(1);
+        }
+        else if(valueInicio==null && valueFin!=null)
+        {
+            Statics.crearConfirmacion((Stage)btnGenerar.getScene().getWindow(),"Seleccione una fecha","Necesita ingresar la fecha de inicio",1);
+            dp_fechaInicio.requestFocus();
+
         }
 
         linechart.getData().clear();
         linechart.getData().add(series);
-
 
     }
 

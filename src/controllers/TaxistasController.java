@@ -3,7 +3,6 @@ package controllers;
 import com.jfoenix.controls.*;
 import com.sun.javafx.robot.FXRobot;
 import com.sun.javafx.robot.FXRobotFactory;
-import controllers.crudsControllers.EmpleadosCrudController;
 import controllers.crudsControllers.TaxistasCrudController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -27,14 +25,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import models.Direccion;
-import models.Empleado;
 import models.Taxista;
 import models.interfaces.AddRegistro;
 import models.interfaces.IAccion;
 import models.interfaces.Registro;
+import resources.Statics;
 import services.sql.TaxistaSQL;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,6 +41,7 @@ public class TaxistasController implements Initializable, IAccion {
 
     @FXML
     private Label label_titulo_taxistas;
+
 
     @FXML
     private JFXTextField txt_buscar;
@@ -159,18 +156,26 @@ public class TaxistasController implements Initializable, IAccion {
     }
     @FXML
     void btnActualizarTaxista_OnAction(ActionEvent event) {
-        abrirVentanaCrud(event, new AddRegistro(table_taxistas.getSelectionModel().getSelectedItem().getValue()) {
-            @Override
-            public boolean addRegistro(Registro registro, Stage stage) {
+        if (table_taxistas.getSelectionModel().getSelectedIndex()>-1)
+        {
+            abrirVentanaCrud(event, new AddRegistro(table_taxistas.getSelectionModel().getSelectedItem().getValue()) {
+                @Override
+                public boolean addRegistro(Registro registro, Stage stage) {
 
-                if(new TaxistaSQL().actualizar((Taxista) registro)){
-                    table_taxistas.getSelectionModel().getSelectedItem().setValue((Taxista) registro);
-                    return  true;
+                    if (new TaxistaSQL().actualizar((Taxista) registro)) {
+                        table_taxistas.getSelectionModel().getSelectedItem().setValue((Taxista) registro);
+                        return true;
+                    }
+
+                    return false;
                 }
+            }, "Actualizar taxista");
+        }
+        else
+        {
+            Statics.crearConfirmacion((Stage)button_actualizarTaxista.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder editarlo",1);
 
-                return false;
-            }
-        },"Actualizar taxista");
+        }
     }
 
     @FXML

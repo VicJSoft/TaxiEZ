@@ -27,6 +27,7 @@ import models.Direccion;
 import models.interfaces.AddRegistro;
 import models.interfaces.IAccion;
 import models.interfaces.Registro;
+import resources.Statics;
 import services.sql.ClienteSQL;
 
 import java.io.IOException;
@@ -159,16 +160,25 @@ public class ClientesController implements Initializable,IAccion {
     @FXML
     void btnActualizarCliente_OnAction(ActionEvent event) {
 
-        abrirVentanaCrud(event, new AddRegistro(table_view_clientes.getSelectionModel().getSelectedItem().getValue()) {
-            @Override
-            public boolean addRegistro(Registro registro, Stage stage) {
-                if(new ClienteSQL().actualizar((Cliente) registro)){
-                    table_view_clientes.getSelectionModel().getSelectedItem().setValue((Cliente)registro);
-                    return true;
+        if(table_view_clientes.getSelectionModel().getSelectedIndex()>-1)
+        {
+            abrirVentanaCrud(event, new AddRegistro(table_view_clientes.getSelectionModel().getSelectedItem().getValue()) {
+                @Override
+                public boolean addRegistro(Registro registro, Stage stage) {
+                    if (new ClienteSQL().actualizar((Cliente) registro)) {
+                        table_view_clientes.getSelectionModel().getSelectedItem().setValue((Cliente) registro);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        }, "Actualizar Cliente");
+            }, "Actualizar Cliente");
+        }
+        else
+        {
+
+            Statics.crearConfirmacion((Stage)button_actualizarCliente.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder editarlo",1);
+
+        }
     }
 
     @FXML

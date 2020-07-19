@@ -151,6 +151,13 @@ public class Statics {
                 alert.setResult(false);
                 alert.hideWithAnimation();
             });
+            btnContinuar.setOnAction(action->{
+
+                alert.setResult(true);
+
+                alert.hideWithAnimation();
+
+            });
         }
         else
         {
@@ -160,14 +167,15 @@ public class Statics {
 
             btnContinuar.setText("Aceptar");
             content.setActions(btnContinuar);
+            btnContinuar.setOnAction(action->{
+
+                alert.setResult(true);
+
+                alert.hideWithAnimation();
+
+            });
         }
-        btnContinuar.setOnAction(action->{
 
-            alert.setResult(true);
-
-            alert.hideWithAnimation();
-
-        });
 
 
         alert.setContent(content);

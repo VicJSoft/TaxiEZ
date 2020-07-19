@@ -125,7 +125,6 @@ public class EmpleadoSQL {
 
         }
 
-
         return existe;
 
     }
@@ -261,6 +260,8 @@ public class EmpleadoSQL {
         }
         return null;
     }
+
+
 
 
 }

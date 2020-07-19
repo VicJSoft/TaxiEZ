@@ -22,7 +22,7 @@
           <NumberAxis id="y" fx:id="yAxis" side="LEFT" />
         </yAxis>
       </LineChart>
-      <JFXComboBox fx:id="comboBox_tipoReporte" focusColor="#5ab444" labelFloat="true" layoutX="661.0" layoutY="81.0" prefHeight="31.0" prefWidth="267.0" promptText="Tipo de reporte" styleClass="jfx-combo-box" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="81.0" />
+      <JFXComboBox fx:id="comboBox_tipoReporte" focusColor="#5ab444" labelFloat="true" layoutX="582.0" layoutY="71.0" prefHeight="31.0" prefWidth="267.0" promptText="Tipo de reporte" styleClass="jfx-combo-box" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="71.0" />
       <JFXComboBox fx:id="comboBox_multiple" focusColor="#5ab444" labelFloat="true" layoutX="661.0" layoutY="125.0" prefHeight="31.0" prefWidth="267.0" styleClass="jfx-combo-box" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="125.0" />
       <JFXDatePicker fx:id="dp_fechaInicio" layoutX="53.0" layoutY="125.0" promptText="Fecha Inicio" />
       <JFXDatePicker fx:id="dp_fechaFin" layoutX="292.0" layoutY="125.0" promptText="Fecha Fin" />
@@ -31,12 +31,12 @@
             <Font name="Gadugi" size="30.0" />
          </font>
       </Label>
-      <Button layoutX="770.0" layoutY="489.0" mnemonicParsing="false" onAction="#btnGenerar_OnActiion" prefHeight="25.0" prefWidth="108.0" styleClass="boton" text="Generar" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0" />
-      <JFXRadioButton fx:id="rbRegular" visible="false" onAction="#rbRegular_OnAction" layoutX="576.0" layoutY="40.0" selected="true" text="Servicio regular" AnchorPane.rightAnchor="203.0" AnchorPane.topAnchor="40.0">
+      <Button fx:id="btnGenerar" layoutX="770.0" layoutY="489.0" mnemonicParsing="false" onAction="#btnGenerar_OnActiion" prefHeight="25.0" prefWidth="108.0" styleClass="boton" text="Generar" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0" />
+      <JFXRadioButton fx:id="rbRegular" layoutX="576.0" layoutY="40.0" onAction="#rbRegular_OnAction" selected="true" text="Servicio regular" visible="false" AnchorPane.rightAnchor="203.0" AnchorPane.topAnchor="40.0">
          <toggleGroup>
             <ToggleGroup fx:id="tipoServicio" />
          </toggleGroup>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="rbProgramado" visible="false" onAction="#rbProgramado_OnAction" layoutX="718.0" layoutY="40.0" text="Servicio programado" toggleGroup="$tipoServicio" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="40.0" />
+      <JFXRadioButton fx:id="rbProgramado" layoutX="718.0" layoutY="40.0" onAction="#rbProgramado_OnAction" text="Servicio programado" toggleGroup="$tipoServicio" visible="false" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="40.0" />
    </children>
 </AnchorPane>

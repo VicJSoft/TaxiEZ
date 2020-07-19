@@ -32,6 +32,7 @@ import models.Taxista;
 import models.interfaces.Registro;
 import models.interfaces.AddRegistro;
 import models.interfaces.IAccion;
+import resources.Statics;
 import services.sql.TaxisSQL;
 
 import java.io.IOException;
@@ -174,16 +175,24 @@ public class TaxisController implements Initializable,IAccion {
     @FXML
     void btnActualizarTaxi_OnAction(ActionEvent event) {
 
-        abrirVentanaCrud(event, new AddRegistro(table_taxis.getSelectionModel().getSelectedItem().getValue()) {
-            @Override
-            public boolean addRegistro(Registro registro, Stage stage) {
-                if(new TaxisSQL().actualizar((Taxi) registro)) {
-                    table_taxis.getSelectionModel().getSelectedItem().setValue((Taxi) registro);
-                    return true;
+        if(table_taxis.getSelectionModel().getSelectedIndex()>-1)
+        {
+            abrirVentanaCrud(event, new AddRegistro(table_taxis.getSelectionModel().getSelectedItem().getValue()) {
+                @Override
+                public boolean addRegistro(Registro registro, Stage stage) {
+                    if (new TaxisSQL().actualizar((Taxi) registro)) {
+                        table_taxis.getSelectionModel().getSelectedItem().setValue((Taxi) registro);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        },"Actualizar Taxi").textField_unidad.setDisable(true);
+            }, "Actualizar Taxi").textField_unidad.setDisable(true);
+        }
+        else
+        {
+            Statics.crearConfirmacion((Stage)button_actualizarTaxi.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder editarlo",1);
+
+        }
     }
 
     @FXML

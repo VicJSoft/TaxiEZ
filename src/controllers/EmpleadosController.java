@@ -29,6 +29,7 @@ import models.Empleado;
 import models.interfaces.AddRegistro;
 import models.interfaces.IAccion;
 import models.interfaces.Registro;
+import resources.Statics;
 import services.sql.EmpleadoSQL;
 
 import java.io.IOException;
@@ -163,6 +164,8 @@ public class EmpleadosController  implements Initializable, IAccion {
         abrirVentanaCrud(event, new AddRegistro(null) {
             @Override
             public boolean addRegistro(Registro registro, Stage stage) {
+              EmpleadoSQL empleadoSQL = new EmpleadoSQL();
+
                 if(new EmpleadoSQL().insertar((Empleado) registro)){
                     listaEmpleados.add((Empleado) registro);
                     table_empleados.getSelectionModel().selectLast();
@@ -187,16 +190,24 @@ public class EmpleadosController  implements Initializable, IAccion {
 
     @FXML
     void btnActualizarEmpleado_OnAction(ActionEvent event) {
-        abrirVentanaCrud(event, new AddRegistro(table_empleados.getSelectionModel().getSelectedItem().getValue()) {
-            @Override
-            public boolean addRegistro(Registro registro, Stage stage) {
-                if(new EmpleadoSQL().actualizar((Empleado) registro)){
-                    table_empleados.getSelectionModel().getSelectedItem().setValue((Empleado) registro);
-                    return true;
+        if(table_empleados.getSelectionModel().getSelectedIndex()>-1)
+        {
+            abrirVentanaCrud(event, new AddRegistro(table_empleados.getSelectionModel().getSelectedItem().getValue()) {
+                @Override
+                public boolean addRegistro(Registro registro, Stage stage) {
+                    if(new EmpleadoSQL().actualizar((Empleado) registro)){
+                        table_empleados.getSelectionModel().getSelectedItem().setValue((Empleado) registro);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        },"Actualizar Empleados");
+            },"Actualizar Empleados");
+        }
+        else
+        {
+            Statics.crearConfirmacion((Stage)button_actualizarEmpleado.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder editarlo",1);
+
+        }
     }
 
     private void abrirVentanaCrud(ActionEvent event, AddRegistro addRegistro,String titulo){

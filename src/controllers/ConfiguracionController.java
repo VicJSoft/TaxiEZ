@@ -105,6 +105,10 @@ public class ConfiguracionController implements Initializable, IValidateCRUD {
                 connection = DriverManager.getConnection(path,user,pass);
 
                this.conexionSatisfactoria = true;
+                ErrorController errorController =  new ErrorController("Conectado", "Conectado","¡Conexión a la base de datos exitosa!");
+                errorController.show(btn_Probar.getScene().getWindow());
+
+
             } 
             catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) 
             {
@@ -116,9 +120,10 @@ public class ConfiguracionController implements Initializable, IValidateCRUD {
                 ex.getMessage(); 
                 this.conexionSatisfactoria = false;
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+                ErrorController errorController =  new ErrorController("Error de conexión", "Error de conexión","¡Conexión a la base de datos fallida!\n¡Inténtelo de nuevo!\n¡Llame al administrador!");
+                errorController.show(btn_Probar.getScene().getWindow());
+            }
 
-            
         }
     }
 

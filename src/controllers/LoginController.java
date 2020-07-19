@@ -131,6 +131,7 @@ public class LoginController implements Initializable {
     void btnLogin_Click(ActionEvent event) throws IOException {
 
         Empleado empleado = null;
+
         try {
             empleado = new EmpleadoSQL().existe(txt_usuario.getText(), txt_contrasena.getText());
         } catch (SQLException e) {
@@ -140,6 +141,14 @@ public class LoginController implements Initializable {
         if(empleado==null)
         {
             //ventana error de credenciales.
+           // Statics.crearConfirmacion((Stage)fondoAP.getScene().getWindow(),,,1);
+            Stage stage = new Stage();
+            ErrorController errorController =  new ErrorController("Error de acceso", "Error de acceso","Usuario y contraseña inválidas intente de nuevo");
+            errorController.show(btn_login.getScene().getWindow());
+            txt_usuario.setText("");
+            txt_usuario.requestFocus();
+            txt_contrasena.setText("");
+            getCredeciales();
         }
         else{
 
@@ -171,6 +180,7 @@ public class LoginController implements Initializable {
             {
                 cb_recordar.setSelected(true);
                 txt_usuario.setText(sharePreferences.getUsuario());
+
             }
             else
             {

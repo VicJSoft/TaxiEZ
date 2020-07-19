@@ -41,8 +41,6 @@ public class PrincipalController implements Initializable {
     @FXML
     private MenuItem miEmpleados;
 
-    @FXML
-    private MenuItem miTaxisTaxista;
 
     @FXML
     private MenuItem miEstadisticas;
@@ -61,6 +59,11 @@ public class PrincipalController implements Initializable {
 
     @FXML
     private MenuItem miAcercaDe;
+    @FXML
+    private MenuItem miTaxis;
+
+    @FXML
+    private MenuItem miTaxistas;
 
     @FXML
     private AnchorPane apContenedorSecundario;
@@ -72,7 +75,13 @@ public class PrincipalController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //refactorizar, solo copié y pegué
-
+       if(!Statics.empleadoSesionActual.isTipoEmpleado())
+       {
+           miEmpleados.setVisible(false);
+           miTaxistas.setVisible(false);
+           miTaxis.setVisible(false);
+           miEstadisticas.setVisible(false);
+       }
         cargarPantalla("Servicios");
 
 
@@ -144,28 +153,40 @@ public class PrincipalController implements Initializable {
 
     @FXML
     void empleadosAcelerator_OnAction(ActionEvent event) {
-        cargarPantalla("Empleados");
+
+        if(Statics.empleadoSesionActual.isTipoEmpleado()) {
+            cargarPantalla("Empleados");
+            setTitle("Empleados");
+        }
     }
 
     @FXML
     void estadisticasAcelerator_OnAction(ActionEvent event) {
-        cargarPantalla("Estadisticas");
-        setTitle("Estadísticas");
+        if(Statics.empleadoSesionActual.isTipoEmpleado())
+        {
+            cargarPantalla("Estadisticas");
+            setTitle("Estadísticas");
+        }
+
 
     }
 
     @FXML
     void taxisAcelerator_OnAction(ActionEvent event) {
 
-        cargarPantalla("Taxis");
-        setTitle("Taxis");
+        if(Statics.empleadoSesionActual.isTipoEmpleado()) {
+            cargarPantalla("Taxis");
+            setTitle("Taxis");
+        }
     }
 
     @FXML
     void taxistasAcelerator_OnAction(ActionEvent event) {
 
-        cargarPantalla("Taxistas");
-        setTitle("Taxistas");
+        if(Statics.empleadoSesionActual.isTipoEmpleado()) {
+            cargarPantalla("Taxistas");
+            setTitle("Taxistas");
+        }
     }
 
 

@@ -23,7 +23,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <JFXTextField fx:id="textField_buscarServicios" layoutX="14.0" layoutY="49.0" prefHeight="25.0" prefWidth="269.0" promptText="Buscar servicio" styleClass="text-field-busqueda" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
-                        <JFXTreeTableView fx:id="tablaServicio" layoutY="70.0" prefHeight="562.0" prefWidth="991.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                        <JFXTreeTableView fx:id="tablaServicio" layoutY="70.0" prefHeight="562.0" prefWidth="991.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                            <columns>
                               <TreeTableColumn fx:id="cmServicios_fechaAdd" prefWidth="103.0" text="Fecha adición" />
                               <TreeTableColumn fx:id="cmServicios_fechaServicio" prefWidth="103.0" text="Fecha Servicio" />
@@ -98,7 +98,7 @@
                               </JFXButton>
                            </children>
                         </HBox>
-                        <JFXTreeTableView fx:id="tablaServicioPend" layoutY="94.0" prefHeight="538.0" prefWidth="991.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                        <JFXTreeTableView fx:id="tablaServicioPend" layoutY="94.0" prefHeight="538.0" prefWidth="991.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                            <columns>
                               <TreeTableColumn fx:id="cmServiciosPend_fechaAdd" prefWidth="75.0" text="Fecha agregación" />
                               <TreeTableColumn fx:id="cmServiciosPend_fechaServicio" prefWidth="75.0" text="Fecha Servicio" />
@@ -119,7 +119,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <JFXTreeTableView fx:id="tablaServicioProgr" layoutX="-7.0" layoutY="77.0" prefHeight="555.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                        <JFXTreeTableView fx:id="tablaServicioProgr" layoutX="-7.0" layoutY="77.0" prefHeight="555.0" prefWidth="998.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                            <columns>
                               <TreeTableColumn fx:id="cmServiciosProg_FechaAdicion" prefWidth="75.0" text="Fecha adición" />
                               <TreeTableColumn fx:id="cmServiciosProg_FechaInicio" prefWidth="75.0" text="Fecha inicio" />
