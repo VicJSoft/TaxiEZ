@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="529.0" prefWidth="888.0" styleClass="mainFxmlClass" stylesheets="@../resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EstadisticasController">
+<AnchorPane id="AnchorPane" prefHeight="529.0" prefWidth="888.0" style="-fx-background-color: #FFFFFF;" styleClass="mainFxmlClass" stylesheets="@../resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EstadisticasController">
    <children>
       <LineChart fx:id="linechart" layoutX="14.0" layoutY="167.0" prefHeight="322.0" prefWidth="858.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="167.0">
         <xAxis>

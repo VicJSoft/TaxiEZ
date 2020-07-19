@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="fondo_clientes" prefHeight="529.0" prefWidth="888.0" stylesheets="@../resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientesController">
+<AnchorPane fx:id="fondo_clientes" prefHeight="529.0" prefWidth="888.0" style="-fx-background-color: #FFFFFF;" styleClass="ventana-blanca" stylesheets="@../resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientesController">
    <children>
       <JFXTextField fx:id="txtF_buscar" layoutX="10.0" layoutY="73.0" prefHeight="25.0" prefWidth="250.0" promptText="Buscar por teléfono..." styleClass="text-field-busqueda" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="73.0" />
       <JFXTreeTableView fx:id="table_view_clientes" layoutY="117.0" prefHeight="410.0" prefWidth="884.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="117.0">
