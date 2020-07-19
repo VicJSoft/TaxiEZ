@@ -56,7 +56,7 @@
                      </accelerator></MenuItem>
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Acciones">
+            <Menu fx:id="accionesMenu" mnemonicParsing="false" text="Acciones">
               <items>
                 <MenuItem fx:id="miAccionPrimaria" mnemonicParsing="false" onAction="#accionPrimaria_OnAction" text="Primaria">
                      <accelerator>

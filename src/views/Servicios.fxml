@@ -22,7 +22,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <JFXTextField fx:id="textField_buscarServicios" layoutX="14.0" layoutY="49.0" prefHeight="25.0" prefWidth="269.0" promptText="Buscar servicio" styleClass="text-field-busqueda" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                        <JFXTextField fx:id="textField_buscarServicios" layoutX="14.0" layoutY="49.0" prefHeight="25.0" prefWidth="250.0" promptText="Buscar servicio por teléfono" styleClass="text-field-busqueda" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
                         <JFXTreeTableView fx:id="tablaServicio" layoutY="70.0" prefHeight="562.0" prefWidth="991.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                            <columns>
                               <TreeTableColumn fx:id="cmServicios_fechaAdd" prefWidth="103.0" text="Fecha adición" />
@@ -46,9 +46,9 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="554.0">
                      <children>
-                        <JFXTextField fx:id="textField_buscarPendiente" layoutX="14.0" layoutY="43.0" prefHeight="25.0" prefWidth="169.0" promptText="Buscar pendiente" styleClass="text-field-busqueda" AnchorPane.topAnchor="20.0" />
-                        <JFXTextField fx:id="textField_servicioRapido" layoutX="206.0" layoutY="44.0" prefHeight="25.0" prefWidth="169.0" promptText="Servicio rápido" styleClass="text-field-busqueda" AnchorPane.topAnchor="20.0" />
-                        <JFXTextField fx:id="textField_cantidad" layoutX="395.0" layoutY="44.0" prefHeight="25.0" prefWidth="169.0" promptText="Cantidad" styleClass="text-field-busqueda" AnchorPane.topAnchor="20.0" />
+                        <JFXTextField fx:id="textField_buscarPendiente" layoutX="14.0" layoutY="43.0" prefHeight="25.0" prefWidth="250.0" promptText="Buscar pendiente por teléfono" styleClass="text-field-busqueda" AnchorPane.topAnchor="20.0" />
+                        <JFXTextField fx:id="textField_servicioRapido" layoutX="318.0" layoutY="20.0" prefHeight="25.0" prefWidth="169.0" promptText="Servicio rápido" styleClass="text-field-busqueda" AnchorPane.topAnchor="20.0" />
+                        <JFXTextField fx:id="textField_cantidad" layoutX="496.0" layoutY="20.0" prefHeight="25.0" prefWidth="169.0" promptText="Cantidad" styleClass="text-field-busqueda" AnchorPane.topAnchor="20.0" />
                         <HBox alignment="CENTER" layoutX="771.0" layoutY="6.0" prefHeight="54.0" prefWidth="200.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="6.0">
                            <children>
                               <JFXButton fx:id="btnAddServicio" contentDisplay="CENTER" onAction="#btnAddServicioNormal_OnAction" ripplerFill="#caffbf" HBox.hgrow="ALWAYS">
@@ -136,7 +136,7 @@
                               <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </JFXTreeTableView>
-                        <JFXTextField fx:id="textField_buscarProgramado" prefHeight="25.0" prefWidth="169.0" promptText="Buscar programado" styleClass="text-field-busqueda" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                        <JFXTextField fx:id="textField_buscarProgramado" prefHeight="25.0" prefWidth="250.0" promptText="Buscar programado por teléfono" styleClass="text-field-busqueda" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
                         <HBox alignment="CENTER" layoutX="756.0" layoutY="6.0" prefHeight="54.0" prefWidth="200.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="6.0">
                            <children>
                               <JFXButton fx:id="btnAddProgramado" contentDisplay="CENTER" onAction="#btnAddServicioProgramado_OnAction" ripplerFill="#caffbf" HBox.hgrow="ALWAYS">

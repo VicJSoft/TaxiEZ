@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TaxisController implements Initializable,IAccion {
@@ -198,11 +199,30 @@ public class TaxisController implements Initializable,IAccion {
     @FXML
     void btnEliminarTaxi_OnAction(ActionEvent event) {
 
-        Taxi empleado = table_taxis.getSelectionModel().getSelectedItem().getValue();
+        if(table_taxis.getSelectionModel().getSelectedIndex()>-1)
+        {
+            Optional<Boolean> resultConfirmacion =
+                    Statics.crearConfirmacion((Stage) button_eliminarTaxi.getScene().getWindow(), "Eliminación de Taxi", "Se eliminará el taxi \n ¿Desea continuar?", 2);
+            //por si solo se cierra la ventana.
 
-        if(new TaxisSQL().eliminar(empleado)){
-            listaTaxis.remove(empleado);
+            //si la confimaición da false entonces el borrado queda cancelado.
+            if (resultConfirmacion.isPresent()) {
+                if (resultConfirmacion.get())
+                {
+                    Taxi empleado = table_taxis.getSelectionModel().getSelectedItem().getValue();
+
+                    if(new TaxisSQL().eliminar(empleado)){
+                        listaTaxis.remove(empleado);
+                    }
+                }
+            }
         }
+        else
+        {
+            Statics.crearConfirmacion((Stage)button_eliminarTaxi.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder eliminarlo",1);
+        }
+
+
     }
 
 

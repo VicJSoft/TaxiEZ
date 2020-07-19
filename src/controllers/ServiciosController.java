@@ -28,6 +28,7 @@ import models.interfaces.AddRegistro;
 import models.interfaces.IAccion;
 import models.interfaces.Registro;
 import models.interfaces.SetAddRegistroListener;
+import resources.Statics;
 import services.sql.ClienteSQL;
 import services.sql.ServicioProgramadoSQL;
 import services.sql.ServicioRegularSQL;
@@ -35,8 +36,11 @@ import services.sql.ServicioRegularSQL;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
@@ -1013,24 +1017,47 @@ public class ServiciosController implements Initializable, IAccion {
     void btnAplicarServicioProgramado_OnAction(ActionEvent event) {
         //si no hay selección, a pastar.
         if(tablaServicioProgr.getSelectionModel().isEmpty()){
+            Statics.crearConfirmacion((Stage) btnCancelServicio.getScene().getWindow(), "Error de Aplicación de Servicio Programado", "Necesita seleccionar un registro para aplicarlo", 1);
             return;
         }
         if(tablaServicioProgr.getSelectionModel().getSelectedItem().getValue().getFechaFin()!=null){
-
+            Statics.crearConfirmacion((Stage) btnCancelServicio.getScene().getWindow(), "Error de Aplicación de Servicio Programado", "El servicio fue eliminado de manera permanente", 1);
             //acabó la programación de este servicio. No puede generar ningún servicio regular a partir de este servicio programado.
             return;
         }
 
 
+            //   listaServicioRegularesPendientes.remove(tablaServicioPend.getSelectionModel().getSelectedItem().getValue());
+            // if(true)
+            //   return;
+            TreeItem<ServiciosProgramado> serviciosProgramadoTreeItem = tablaServicioProgr.getSelectionModel().getSelectedItem();
+
+            if (serviciosProgramadoTreeItem.getValue().getFechaUltimaAplicacion()==null)
+            {
+                 aplicacion_servicio(serviciosProgramadoTreeItem.getValue());
+
+            }
+            else if(serviciosProgramadoTreeItem.getValue().getFechaUltimaAplicacion().isBefore(null))
+            {
+                aplicacion_servicio(serviciosProgramadoTreeItem.getValue());
+            }
+            else
+            {
+                Statics.crearConfirmacion((Stage)btnCancelServicio.getScene().getWindow(),"Información","El servicio ya fue realizado el día de hoy, no se puede realizar de nuevo hasta el siguiente día de envío",1);
+            }
+
+
+
+
+        System.out.println("Aplicar servicio programado.");
+    }
+    private void aplicacion_servicio(ServiciosProgramado serviciosProgramado)
+    {
         try {
             FXMLLoader controladorLoader = new FXMLLoader(getClass().getResource("/views/AsignarUnidad.fxml"));
             AnchorPane contenedorAsignarUnidad = controladorLoader.load();
             AsignarUnidadController asignarUnidadController = controladorLoader.getController();
 
-            //   listaServicioRegularesPendientes.remove(tablaServicioPend.getSelectionModel().getSelectedItem().getValue());
-            // if(true)
-            //   return;
-            TreeItem<ServiciosProgramado> serviciosProgramadoTreeItem = tablaServicioProgr.getSelectionModel().getSelectedItem();
             ServiciosProgramado serviciosProgramadoSelected = tablaServicioProgr.getSelectionModel().getSelectedItem().getValue();
             ServicioRegular servicioRegularGenerado = serviciosProgramadoSelected.generarServicioRegular();
 
@@ -1056,8 +1083,7 @@ public class ServiciosController implements Initializable, IAccion {
                         serviciosProgramadoTreeItem.setValue(null);
                         serviciosProgramadoTreeItem.setValue(serviciosProgramadoSelected);
 
-                       // tablaServicioProgr.refresh();
-
+                        // tablaServicioProgr.refresh();
 
 
                         return true;
@@ -1085,27 +1111,42 @@ public class ServiciosController implements Initializable, IAccion {
             primaryStage.initOwner(this.textField_servicioRapido.getScene().getWindow());
             primaryStage.initModality(Modality.WINDOW_MODAL);
             primaryStage.show();
-
-
         }
-        catch (IOException e) {
+        catch(IOException e)
+        {
             e.printStackTrace();
         }
-
-
-        System.out.println("Aplicar servicio programado.");
     }
 
     @FXML
     void btnCancelServicioNormal_OnAction(ActionEvent event) {
 
         try {
-            ServicioRegular servicioRegularSeleccionado = tablaServicioPend.getSelectionModel().getSelectedItem().getValue();
-            if(servicioRegularSeleccionado!=null){
-                if(new ServicioRegularSQL().cancelarServicioPendiente(servicioRegularSeleccionado.getIdServicio())){
-                    listaServicioRegularesPendientes.remove(servicioRegularSeleccionado);
+            if(tablaServicioPend.getSelectionModel().getSelectedIndex()>-1)
+            {
+                Optional<Boolean> resultConfirmacion =
+                        Statics.crearConfirmacion((Stage) btnCancelServicio.getScene().getWindow(), "Cancelación de Servicio Pendiente", "Se cancelará el servicio pendiente \n ¿Desea continuar?", 2);
+                //por si solo se cierra la ventana.
+
+                //si la confimaición da false entonces el borrado queda cancelado.
+                if (resultConfirmacion.isPresent()) {
+                    if (resultConfirmacion.get())
+                    {
+                        ServicioRegular servicioRegularSeleccionado = tablaServicioPend.getSelectionModel().getSelectedItem().getValue();
+                        if(servicioRegularSeleccionado!=null){
+                            if(new ServicioRegularSQL().cancelarServicioPendiente(servicioRegularSeleccionado.getIdServicio())){
+                                listaServicioRegularesPendientes.remove(servicioRegularSeleccionado);
+                            }
+                        }
+                    }
                 }
             }
+            else
+            {
+                Statics.crearConfirmacion((Stage)btnCancelServicio.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder cancelarlo",1);
+            }
+
+
 
 
         } catch (SQLException e) {
@@ -1120,21 +1161,37 @@ public class ServiciosController implements Initializable, IAccion {
 
         if(!tablaServicioProgr.getSelectionModel().isEmpty()) {
 
-            ServiciosProgramado serviciosProgramado = tablaServicioProgr.getSelectionModel().getSelectedItem().getValue();
+            Optional<Boolean> resultConfirmacion =
+                    Statics.crearConfirmacion((Stage) btnCancelServicio.getScene().getWindow(), "Cancelación de Servicio programado", "Se cancelará el servicio programado de manera permanente \n ¿Desea continuar?", 2);
+            //por si solo se cierra la ventana.
 
-            try {
-                if(serviciosProgramado.getFechaFin()==null)
-                    if(new ServicioProgramadoSQL().terminarProgramacionServicio(serviciosProgramado)){
+            //si la confimaición da false entonces el borrado queda cancelado.
+            if (resultConfirmacion.isPresent()) {
+                if (resultConfirmacion.get())
+                {
+                    ServiciosProgramado serviciosProgramado = tablaServicioProgr.getSelectionModel().getSelectedItem().getValue();
 
-                        tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(null);
-                        tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(serviciosProgramado);
-                      // if(listaServicioProgramado.size()<30)
-                            //tablaServicioProgr.refresh();
+                    try {
+                        if(serviciosProgramado.getFechaFin()==null)
+                            if(new ServicioProgramadoSQL().terminarProgramacionServicio(serviciosProgramado)){
 
+                                tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(null);
+                                tablaServicioProgr.getSelectionModel().getSelectedItem().setValue(serviciosProgramado);
+                                // if(listaServicioProgramado.size()<30)
+                                //tablaServicioProgr.refresh();
+
+                            }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-            } catch (SQLException e) {
-                e.printStackTrace();
+                }
             }
+
+        }
+        else
+        {
+            Statics.crearConfirmacion((Stage)btnCancelServicio.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder cancelarlo",1);
+
         }
 
         System.out.println("Finalizar servicio programado.");

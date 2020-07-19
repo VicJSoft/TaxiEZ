@@ -32,6 +32,7 @@ import services.sql.ClienteSQL;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ClientesController implements Initializable,IAccion {
@@ -198,11 +199,30 @@ public class ClientesController implements Initializable,IAccion {
     }
 
     @FXML
-    void btnDeleteCliente_OnAction(ActionEvent event) {
-        Cliente clienteSelected = table_view_clientes.getSelectionModel().getSelectedItem().getValue();
-        if(new ClienteSQL().eliminar(clienteSelected)){
-            listaServicios.remove(clienteSelected);
+    void btnDeleteCliente_OnAction(ActionEvent event)
+    {
+        if(table_view_clientes.getSelectionModel().getSelectedIndex()>-1)
+        {
+            Optional<Boolean> resultConfirmacion =
+                    Statics.crearConfirmacion((Stage) button_eliminarCliente.getScene().getWindow(), "Eliminación de Cliente", "Se eliminará el cliente \n ¿Desea continuar?", 2);
+            //por si solo se cierra la ventana.
+
+            //si la confimaición da false entonces el borrado queda cancelado.
+            if (resultConfirmacion.isPresent()) {
+                if (resultConfirmacion.get()) {
+                    Cliente clienteSelected = table_view_clientes.getSelectionModel().getSelectedItem().getValue();
+                    if (new ClienteSQL().eliminar(clienteSelected)) {
+                        listaServicios.remove(clienteSelected);
+                    }
+
+                }
+            }
         }
+        else
+        {
+            Statics.crearConfirmacion((Stage)button_eliminarCliente.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder eliminarlo",1);
+        }
+
     }
 
     private void abrirVentanaCrud(ActionEvent event, AddRegistro addRegistro, String titulo){

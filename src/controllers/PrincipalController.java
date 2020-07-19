@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -22,6 +23,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class PrincipalController implements Initializable {
+
+    @FXML
+    private Menu accionesMenu;
 
     @FXML
     private MenuItem miConfiguracion;
@@ -82,6 +86,7 @@ public class PrincipalController implements Initializable {
            miTaxis.setVisible(false);
            miEstadisticas.setVisible(false);
        }
+
         cargarPantalla("Servicios");
 
 
@@ -217,6 +222,7 @@ public class PrincipalController implements Initializable {
 
 
     private void cargarPantalla(String pantallaName){
+
         try {
 
 
@@ -234,6 +240,17 @@ public class PrincipalController implements Initializable {
     private void setTitle(String pantallaName)
     {
         ((Stage)apContenedorSecundario.getScene().getWindow()).setTitle(pantallaName);
+        if(pantallaName.equals("Estadísticas"))
+        {
+            System.out.println("entre");
+            accionesMenu.setVisible(false);
+        }
+        else
+        {
+            System.out.println("no entre");
+            accionesMenu.setVisible(true);
+        }
+
     }
 
 }

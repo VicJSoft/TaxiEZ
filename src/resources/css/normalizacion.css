@@ -148,9 +148,10 @@
     -fx-text-fill: black;
     -fx-prompt-text-fill: #A2A2A2;
     -fx-pref-height: 25px;
-    -fx-pref-width: 170;
+    /*-fx-pref-width: 220;*/
 
 }
+
 /*Linea inferior sin foco*/
 .text-field-busqueda > .input-line
 {

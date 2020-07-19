@@ -33,6 +33,7 @@ import resources.Statics;
 import services.sql.TaxistaSQL;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TaxistasController implements Initializable, IAccion {
@@ -197,10 +198,29 @@ public class TaxistasController implements Initializable, IAccion {
     @FXML
     void btnEliminarTaxista_OnAction(ActionEvent event) {
 
-        Taxista taxista = table_taxistas.getSelectionModel().getSelectedItem().getValue();
-        if(new TaxistaSQL().eliminar(taxista)){
-            listaTaxistas.remove(taxista);
+        if(table_taxistas.getSelectionModel().getSelectedIndex()>-1)
+        {
+            Optional<Boolean> resultConfirmacion =
+                    Statics.crearConfirmacion((Stage) button_eliminarTaxista.getScene().getWindow(), "Eliminación de Taxista", "Se eliminará el taxista \n ¿Desea continuar?", 2);
+            //por si solo se cierra la ventana.
+
+            //si la confimaición da false entonces el borrado queda cancelado.
+            if (resultConfirmacion.isPresent()) {
+                if (resultConfirmacion.get()) {
+                    Taxista taxista = table_taxistas.getSelectionModel().getSelectedItem().getValue();
+                    if(new TaxistaSQL().eliminar(taxista)){
+                        listaTaxistas.remove(taxista);
+                    }
+
+                }
+            }
         }
+        else
+        {
+            Statics.crearConfirmacion((Stage)button_eliminarTaxista.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder eliminarlo",1);
+        }
+
+
     }
 
     private void abrirVentanaCrud(ActionEvent event, AddRegistro addRegistro,String titulo){

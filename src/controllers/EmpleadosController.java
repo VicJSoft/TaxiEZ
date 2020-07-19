@@ -34,6 +34,7 @@ import services.sql.EmpleadoSQL;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -179,11 +180,27 @@ public class EmpleadosController  implements Initializable, IAccion {
     @FXML
     void btnEliminarEmpleado_OnAction(ActionEvent event) {
 
-        Empleado empleado = table_empleados.getSelectionModel().getSelectedItem().getValue();
+        if(table_empleados.getSelectionModel().getSelectedIndex()>-1)
+        {
+            Optional<Boolean> resultConfirmacion =
+                    Statics.crearConfirmacion((Stage) button_eliminarEmpleado.getScene().getWindow(), "Eliminación de Empleado", "Se eliminará el empleado \n ¿Desea continuar?", 2);
+            //si la confimaición da false entonces el borrado queda cancelado.
+            if (resultConfirmacion.isPresent()) {
+                if (resultConfirmacion.get())
+                {
+                    Empleado empleado = table_empleados.getSelectionModel().getSelectedItem().getValue();
 
-        if(new EmpleadoSQL().eliminar(empleado)){
-            listaEmpleados.remove(empleado);
+                    if(new EmpleadoSQL().eliminar(empleado)){
+                        listaEmpleados.remove(empleado);
+                    }
+                }
+            }
         }
+        else
+        {
+            Statics.crearConfirmacion((Stage)button_eliminarEmpleado.getScene().getWindow(),"Seleccione un registro","Necesita seleccionar un registro para poder eliminarlo",1);
+        }
+
 
     }
 

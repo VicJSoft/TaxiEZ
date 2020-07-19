@@ -133,7 +133,8 @@ public class ConfiguracionController implements Initializable, IValidateCRUD {
     }
 
     @Override
-    public void setFieldValidations() {
+    public void setFieldValidations()
+    {
     }
 
     @Override

@@ -20,7 +20,7 @@
             <Font name="Gadugi" size="30.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txt_buscarTaxis" layoutX="14.0" layoutY="75.0" promptText="Buscar..." styleClass="text-field-busqueda" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="73.0" />
+      <JFXTextField fx:id="txt_buscarTaxis" layoutX="14.0" layoutY="75.0" prefWidth="250.0" promptText="Buscar por teléfono..." styleClass="text-field-busqueda" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="73.0" />
       <HBox layoutX="692.0" layoutY="72.0" prefHeight="45.0" prefWidth="180.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="62.0">
          <children>
             <JFXButton fx:id="button_agregarTaxi" ellipsisString="" onAction="#btnAgregarTaxi_OnAction">
