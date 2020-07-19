@@ -76,30 +76,41 @@ public class ServicioRegularSQL {
 
         while(rs.next()){
 
-            Cliente clienteDelServicio = new ClienteSQL().get(rs.getInt("idCliente"));
-            Direccion direccionDelServicio = new DireccionSQL().get(rs.getInt("idDireccion"));
-            Empleado empleadoRegistroServicio = new  EmpleadoSQL().get(rs.getInt("idEmpleado"));
-          //  Taxi taxisDelServicio = new TaxisSQL().get(rs.getInt("idUnidad"));
-
-            Persona datosServicio = new Persona(rs.getString("servicio.nombre"),rs.getString("servicio.observaciones"),direccionDelServicio);
-
 
             LocalDateTime localDateTimeAgregacion = rs.getTimestamp("servicio.fechaAgregacion").toLocalDateTime();
-            LocalDateTime localDateTimeServicio = rs.getTimestamp("servicio.fechaServicio").toLocalDateTime();
+            LocalDate localDate = LocalDate.now();
+            if(localDate.isEqual(LocalDate.from(localDateTimeAgregacion)))
+            {
 
-            //en un servicio pendiente siempre será null
-            LocalDateTime localDateTimeAplicacion =
-                    rs.getTimestamp("servicio.fechaAplicacion") ==null?
-                            null:rs.getTimestamp("servicio.fechaAplicacion").toLocalDateTime();
 
-            ServicioRegular SRAplicado =
-                    new ServicioRegular(datosServicio, rs.getInt("servicio.idServicio"),
-                            localDateTimeAgregacion, localDateTimeServicio, localDateTimeAplicacion,
-                            rs.getBoolean("servicio.isCancelado"), clienteDelServicio, empleadoRegistroServicio);
+                Cliente clienteDelServicio = new ClienteSQL().get(rs.getInt("idCliente"));
+                Direccion direccionDelServicio = new DireccionSQL().get(rs.getInt("idDireccion"));
+                Empleado empleadoRegistroServicio = new EmpleadoSQL().get(rs.getInt("idEmpleado"));
+                //  Taxi taxisDelServicio = new TaxisSQL().get(rs.getInt("idUnidad"));
 
-           // SRAplicado.setTaxi(taxisDelServicio);
+                Persona datosServicio = new Persona(rs.getString("servicio.nombre"), rs.getString("servicio.observaciones"), direccionDelServicio);
 
-            serviciosRegularesPendientes.add(SRAplicado);
+
+                LocalDateTime localDateTimeServicio = rs.getTimestamp("servicio.fechaServicio").toLocalDateTime();
+
+                //en un servicio pendiente siempre será null
+                LocalDateTime localDateTimeAplicacion =
+                        rs.getTimestamp("servicio.fechaAplicacion") == null ?
+                                null : rs.getTimestamp("servicio.fechaAplicacion").toLocalDateTime();
+
+                ServicioRegular SRAplicado =
+                        new ServicioRegular(datosServicio, rs.getInt("servicio.idServicio"),
+                                localDateTimeAgregacion, localDateTimeServicio, localDateTimeAplicacion,
+                                rs.getBoolean("servicio.isCancelado"), clienteDelServicio, empleadoRegistroServicio);
+
+                // SRAplicado.setTaxi(taxisDelServicio);
+
+                serviciosRegularesPendientes.add(SRAplicado);
+            }
+            else
+            {
+                continue;
+            }
         }
 
         return serviciosRegularesPendientes;

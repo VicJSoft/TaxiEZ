@@ -77,7 +77,7 @@ public class ServicioProgramadoSQL {
         ObservableList<ServiciosProgramado> serviciosRegularesPendientes =  FXCollections.observableArrayList();
 
         query ="SELECT * FROM servicioprogramado  " +
-                //"WHERE servicio.isCancelado = 0 and servicio.fechaAplicacion IS NULL " +
+               // "WHERE servicio.fechaFinalizacion IS NULL " +
                 " LIMIT 0,500 ";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -85,40 +85,47 @@ public class ServicioProgramadoSQL {
 
         while(rs.next()){
 
-            Cliente clienteDelServicio = new ClienteSQL().get(rs.getInt("servicioprogramado.idCliente"));
-            Direccion direccionDelServicio = new DireccionSQL().get(rs.getInt("servicioprogramado.idDireccion"));
-            Empleado empleadoRegistroServicio = new  EmpleadoSQL().get(rs.getInt("servicioprogramado.idEmpleado"));
-          //  Taxi taxisDelServicio = new TaxisSQL().get(rs.getInt("idUnidad"));
-
-            Persona datosServicio = new Persona(rs.getString("servicioprogramado.nombre"),rs.getString("servicioprogramado.observaciones"),direccionDelServicio);
-
-
-            LocalDateTime localDateTimeAdicion = rs.getTimestamp("servicioprogramado.fechaAdicion").toLocalDateTime();
-            LocalDateTime localDateTimeInicio = rs.getTimestamp("servicioprogramado.fechaInicio").toLocalDateTime();
-
             //puede ser null.
             LocalDateTime localDateTimeFin =
                     rs.getTimestamp("servicioprogramado.fechaFinalizacion") ==null?
                             null:rs.getTimestamp("servicioprogramado.fechaFinalizacion").toLocalDateTime();
+            if(localDateTimeFin==null) {
 
-            //puede ser null.
-            LocalDateTime localDateTimeUltimoRegistro =
-                    rs.getTimestamp("servicioprogramado.fechaUltimoRegistro") ==null?
-                            null:rs.getTimestamp("servicioprogramado.fechaUltimoRegistro").toLocalDateTime();
+                Cliente clienteDelServicio = new ClienteSQL().get(rs.getInt("servicioprogramado.idCliente"));
+                Direccion direccionDelServicio = new DireccionSQL().get(rs.getInt("servicioprogramado.idDireccion"));
+                Empleado empleadoRegistroServicio = new EmpleadoSQL().get(rs.getInt("servicioprogramado.idEmpleado"));
+                //  Taxi taxisDelServicio = new TaxisSQL().get(rs.getInt("idUnidad"));
 
-            ServiciosProgramado SRAplicado =
-                    new ServiciosProgramado(
-                            datosServicio, rs.getInt("servicioprogramado.idServicioProgramado"),
-                            localDateTimeAdicion, localDateTimeInicio, localDateTimeFin,
-                            false/*no hay campo isCancelado en programados, se puede extraer ese miembro a servicio regular, para que no se herede en el programado rs.getBoolean("servicioprogramado.isCancelado")*/
-                            ,clienteDelServicio, empleadoRegistroServicio,localDateTimeUltimoRegistro,
-                            rs.getBoolean("servicioprogramado.lunes"),rs.getBoolean("servicioprogramado.martes"),rs.getBoolean("servicioprogramado.miercoles"),
-                            rs.getBoolean("servicioprogramado.jueves"),rs.getBoolean("servicioprogramado.viernes"),rs.getBoolean("servicioprogramado.sabado"),
-                            rs.getBoolean("servicioprogramado.domingo"));
+                Persona datosServicio = new Persona(rs.getString("servicioprogramado.nombre"), rs.getString("servicioprogramado.observaciones"), direccionDelServicio);
 
-           // SRAplicado.setTaxi(taxisDelServicio);
 
-            serviciosRegularesPendientes.add(SRAplicado);
+                LocalDateTime localDateTimeAdicion = rs.getTimestamp("servicioprogramado.fechaAdicion").toLocalDateTime();
+                LocalDateTime localDateTimeInicio = rs.getTimestamp("servicioprogramado.fechaInicio").toLocalDateTime();
+
+
+                //puede ser null.
+                LocalDateTime localDateTimeUltimoRegistro =
+                        rs.getTimestamp("servicioprogramado.fechaUltimoRegistro") == null ?
+                                null : rs.getTimestamp("servicioprogramado.fechaUltimoRegistro").toLocalDateTime();
+
+                ServiciosProgramado SRAplicado =
+                        new ServiciosProgramado(
+                                datosServicio, rs.getInt("servicioprogramado.idServicioProgramado"),
+                                localDateTimeAdicion, localDateTimeInicio, localDateTimeFin,
+                                false/*no hay campo isCancelado en programados, se puede extraer ese miembro a servicio regular, para que no se herede en el programado rs.getBoolean("servicioprogramado.isCancelado")*/
+                                , clienteDelServicio, empleadoRegistroServicio, localDateTimeUltimoRegistro,
+                                rs.getBoolean("servicioprogramado.lunes"), rs.getBoolean("servicioprogramado.martes"), rs.getBoolean("servicioprogramado.miercoles"),
+                                rs.getBoolean("servicioprogramado.jueves"), rs.getBoolean("servicioprogramado.viernes"), rs.getBoolean("servicioprogramado.sabado"),
+                                rs.getBoolean("servicioprogramado.domingo"));
+
+                // SRAplicado.setTaxi(taxisDelServicio);
+
+                serviciosRegularesPendientes.add(SRAplicado);
+            }
+            else
+            {
+                continue;
+            }
         }
 
         return serviciosRegularesPendientes;
