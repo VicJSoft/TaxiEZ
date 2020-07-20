@@ -305,4 +305,25 @@ public class ClienteSQL {
         return null;
     }
 
+    /**
+     * Consigue el cliente según el idIndicado, sin importar si fue "borrado" o no.
+     * @param idCliente
+     * Id del empleado a buscarr.
+     * @return
+     * Instancia con los datos que contiene la base de datos.
+     * Null si no existe ese indice.
+     * @throws SQLException
+     */
+    public Cliente getExistente(int idCliente) throws SQLException {
+        query = "SELECT * FROM cliente JOIN direccion ON cliente.idDireccion = cliente.idDireccion WHERE idCliente = ?";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1,idCliente);
+
+        ResultSet resultSet = ps.executeQuery();
+
+        if(resultSet.first()){
+            return crearCliente(resultSet);
+        }
+        return null;
+    }
 }

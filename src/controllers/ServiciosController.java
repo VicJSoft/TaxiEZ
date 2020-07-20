@@ -644,7 +644,7 @@ public class ServiciosController implements Initializable, IAccion {
                     @Override
                     public boolean test(TreeItem<ServicioRegular> servicioRegularTreeItem) {
 
-                        Boolean flag  = servicioRegularTreeItem.getValue().getCliente().getNumero().contains(newValue);
+                        Boolean flag  = servicioRegularTreeItem.getValue().getCliente().getNumero().startsWith(newValue);
 
                         return flag;
                     }
@@ -658,7 +658,7 @@ public class ServiciosController implements Initializable, IAccion {
             @Override
             public boolean test(TreeItem<ServicioRegular> servicioRegularTreeItem) {
 
-                Boolean flag  = servicioRegularTreeItem.getValue().getCliente().getNumero().contains(newValue);
+                Boolean flag  = servicioRegularTreeItem.getValue().getCliente().getNumero().startsWith(newValue);
 
                 return flag;
             }
@@ -669,7 +669,7 @@ public class ServiciosController implements Initializable, IAccion {
                 tablaServicioProgr.setPredicate(new Predicate<TreeItem<ServiciosProgramado>>() {
                     @Override
                     public boolean test(TreeItem<ServiciosProgramado> serviciosProgramadoTreeItem) {
-                        Boolean flag  = serviciosProgramadoTreeItem.getValue().getCliente().getNumero().contains(newValue);
+                        Boolean flag  = serviciosProgramadoTreeItem.getValue().getCliente().getNumero().startsWith(newValue);
 
                         return flag;
                     }

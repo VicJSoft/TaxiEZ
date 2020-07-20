@@ -103,7 +103,7 @@ public class ServicioRegularSQL {
 
         while(rs.next()){
 
-            Cliente clienteDelServicio = new ClienteSQL().get(rs.getInt("idCliente"));
+            Cliente clienteDelServicio = new ClienteSQL().getExistente(rs.getInt("idCliente"));
             Direccion direccionDelServicio = new DireccionSQL().get(rs.getInt("idDireccion"));
             Empleado empleadoRegistroServicio = new  EmpleadoSQL().get(rs.getInt("idEmpleado"));
             Taxi taxisDelServicio = new TaxisSQL().get(rs.getInt("idUnidad"));
