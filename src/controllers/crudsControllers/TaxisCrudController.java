@@ -168,10 +168,31 @@ public class TaxisCrudController extends SetAddRegistroListener implements Initi
 
     @Override
     public void setLengthValidation() {
-        this.textField_unidad.getValidators().add(new StringLengthValidator("Longuitud máxima de 11 digítos.", 11));
+      /*  this.textField_unidad.getValidators().add(new StringLengthValidator("Longuitud máxima de 11 digítos.", 11));
         this.textField_marca.getValidators().add(new StringLengthValidator("Longuitud máxima de 45 carácteres.", 45));
         this.textField_placa.getValidators().add(new StringLengthValidator("Longuitud máxima de 10 carácteres.", 10));
         this.textField_modelo.getValidators().add(new StringLengthValidator("Longuitud máxima de 45 carácteres.", 45));
+*/
+        textField_unidad.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>11) {
+                textField_unidad.setText(oldValue);
+            }
+        });
+        textField_marca.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>45) {
+                textField_marca.setText(oldValue);
+            }
+        });
+        textField_placa.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>10) {
+                textField_placa.setText(oldValue);
+            }
+        });
+        textField_modelo.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>45) {
+                textField_modelo.setText(oldValue);
+            }
+        });
     }
 
     @Override
