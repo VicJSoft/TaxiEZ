@@ -20,7 +20,7 @@
             <Font name="Gadugi" size="30.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txt_buscar" layoutX="14.0" layoutY="65.0" prefWidth="250.0" promptText="Buscar por teléfono..." styleClass="text-field-busqueda" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="73.0" />
+      <JFXTextField fx:id="txt_buscar" layoutX="14.0" layoutY="65.0" prefWidth="250.0" promptText="Buscar por nombre..." styleClass="text-field-busqueda" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="73.0" />
       <JFXTreeTableView fx:id="table_taxistas" layoutX="14.0" layoutY="93.0" prefHeight="271.0" prefWidth="580.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="117.0">
          <columns>
             <TreeTableColumn fx:id="column_nombre_taxistas" minWidth="116.0" prefWidth="75.0" text="Nombre" />

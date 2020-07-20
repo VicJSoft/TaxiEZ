@@ -145,12 +145,12 @@ public class TaxisController implements Initializable,IAccion {
 
                 table_taxis.setPredicate(new Predicate<TreeItem<Taxi>>() {
                     @Override
-                    public boolean test(TreeItem<Taxi> clienteTreeItem) {
+                    public boolean test(TreeItem<Taxi> taxiTreeItem) {
 
                         //condition to filter
                         //Boolean flag = clienteTreeItem.getValue().getNumero().contains(newValue);
                         //or
-                        Boolean flag = (clienteTreeItem.getValue().getIdUnidad()+"").startsWith(newValue);
+                        Boolean flag = (taxiTreeItem.getValue().getIdUnidad()+"").startsWith(newValue);
 
                         return flag;
                     }
