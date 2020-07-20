@@ -4,6 +4,8 @@ import com.jfoenix.controls.*;
 import com.sun.javafx.robot.FXRobot;
 import com.sun.javafx.robot.FXRobotFactory;
 import controllers.crudsControllers.ClientesCrudController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,10 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -36,6 +35,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class ClientesController implements Initializable,IAccion {
 
@@ -143,6 +143,36 @@ public class ClientesController implements Initializable,IAccion {
 
                 return row;
 
+
+            }
+        });
+
+
+
+        txtF_buscar.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                table_view_clientes.setPredicate(new Predicate<TreeItem<Cliente>>() {
+                    @Override
+                    public boolean test(TreeItem<Cliente> clienteTreeItem) {
+
+                        //condition to filter
+                        //Boolean flag = clienteTreeItem.getValue().getNumero().contains(newValue);
+                        //or
+                       Boolean flag = clienteTreeItem.getValue().getNumero().startsWith(newValue);
+                        return flag;
+                    }
+                });
+            }
+        });
+
+        txtF_buscar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                if(event.getCode()==KeyCode.ESCAPE){
+                    txtF_buscar.clear();
+                }
 
             }
         });
