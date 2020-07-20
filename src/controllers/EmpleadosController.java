@@ -4,9 +4,12 @@ import com.jfoenix.controls.*;
 import com.sun.javafx.robot.FXRobot;
 import com.sun.javafx.robot.FXRobotFactory;
 import controllers.crudsControllers.EmpleadosCrudController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,11 +22,13 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import models.Cliente;
 import models.Direccion;
 import models.Empleado;
 import models.interfaces.AddRegistro;
@@ -36,6 +41,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 
 public class EmpleadosController  implements Initializable, IAccion {
@@ -138,6 +144,34 @@ public class EmpleadosController  implements Initializable, IAccion {
             });
 
             return row;
+        });
+
+        txt_buscar.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                table_empleados.setPredicate(new Predicate<TreeItem<Empleado>>() {
+                    @Override
+                    public boolean test(TreeItem<Empleado> empleadoTreeItem) {
+
+                        //condition to filter
+                        //Boolean flag = clienteTreeItem.getValue().getNumero().contains(newValue);
+                        //or
+                        Boolean flag = empleadoTreeItem.getValue().getNombre().contains(newValue);
+                        return flag;
+                    }
+                });
+            }
+        });
+
+        txt_buscar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                if(event.getCode()==KeyCode.ESCAPE){
+                    txt_buscar.clear();
+                }
+
+            }
         });
 
     }
