@@ -4,9 +4,13 @@ import com.sun.javafx.robot.FXRobot;
 import com.sun.javafx.robot.FXRobotFactory;
 import controllers.crudsControllers.EmpleadosCrudController;
 import controllers.crudsControllers.TaxisCrudController;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,15 +24,13 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import models.Direccion;
-import models.Empleado;
-import models.Taxi;
-import models.Taxista;
+import models.*;
 import models.interfaces.Registro;
 import models.interfaces.AddRegistro;
 import models.interfaces.IAccion;
@@ -41,6 +43,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class TaxisController implements Initializable,IAccion {
     @FXML
@@ -133,6 +136,37 @@ public class TaxisController implements Initializable,IAccion {
             });
 
             return row;
+        });
+
+        txt_buscarTaxis.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+
+                table_taxis.setPredicate(new Predicate<TreeItem<Taxi>>() {
+                    @Override
+                    public boolean test(TreeItem<Taxi> clienteTreeItem) {
+
+                        //condition to filter
+                        //Boolean flag = clienteTreeItem.getValue().getNumero().contains(newValue);
+                        //or
+                        Boolean flag = (clienteTreeItem.getValue().getIdUnidad()+"").startsWith(newValue);
+
+                        return flag;
+                    }
+                });
+            }
+        });
+
+        txt_buscarTaxis.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                if(event.getCode()==KeyCode.ESCAPE){
+                    txt_buscarTaxis.clear();
+                }
+
+            }
         });
 
     }
