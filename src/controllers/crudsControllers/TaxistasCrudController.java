@@ -125,12 +125,43 @@ public class TaxistasCrudController extends SetAddRegistroListener implements In
 
     @Override
     public void setLengthValidation() {
-        this.textField_calle.getValidators().add(new StringLengthValidator("Longuitud máxima de 45 carácteres.", 45));
+       /* this.textField_calle.getValidators().add(new StringLengthValidator("Longuitud máxima de 45 carácteres.", 45));
         this.textField_telefono.getValidators().add(new StringLengthValidator("Longuitud máxima de 15 carácteres.", 15));
         this.textField_colonia.getValidators().add(new StringLengthValidator("Longuitud máxima de 45 carácteres.", 45));
         this.textField_nombre.getValidators().add(new StringLengthValidator("Longuitud máxima de 45 carácteres.", 45));
         this.textField_numInt.getValidators().add(new StringLengthValidator("Longuitud máxima de 8 carácteres.", 8));
         this.textField_numExt.getValidators().add(new StringLengthValidator("Longuitud máxima de 8 carácteres.", 8));
+*/
+        textField_calle.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>45) {
+                textField_calle.setText(oldValue);
+            }
+        });
+        textField_telefono.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>15) {
+                textField_telefono.setText(oldValue);
+            }
+        });
+        textField_colonia.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>45) {
+                textField_colonia.setText(oldValue);
+            }
+        });
+        textField_nombre.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>45) {
+                textField_nombre.setText(oldValue);
+            }
+        });
+        textField_numInt.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>8) {
+                textField_numInt.setText(oldValue);
+            }
+        });
+        textField_numExt.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>8) {
+                textField_numExt.setText(oldValue);
+            }
+        });
     }
 
     @Override
