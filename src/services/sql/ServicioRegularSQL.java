@@ -32,39 +32,6 @@ public class ServicioRegularSQL {
 
 
 
-    @Deprecated
-    /**
-     * Se reempleaza por {@link getServiciosRegularesPendientes2}
-     */
-    public ObservableList<ServicioRegular> getServiciosRegularesPendientes(){
-        ObservableList<ServicioRegular> serviciosRegulares =  FXCollections.observableArrayList();
-
-       query = "SELECT * FROM " +
-               "servicio " +
-               "JOIN cliente ON servicio.idCliente = cliente.idCliente " +
-               "JOIN empleado  on servicio.idEmpleado = empleado.idEmpleado " +
-               "JOIN direccion ON servicio.idDireccion = direccion.idDireccion " +
-               "WHERE servicio.isCancelado = 0 and servicio.fechaAplicacion IS NULL " +
-               "LIMIT 0, 250";
-        try
-        {
-            ps = connection.prepareStatement(query);
-            rs=ps.executeQuery();
-            while(rs.next())
-            {
-                serviciosRegulares.add( crearServicioPendiente(rs) );
-            }
-
-            ps.close();
-        }
-        catch(SQLException ex)
-        {
-            Logger.getLogger(ClienteSQL.class.getName()).log(Level.SEVERE, "Error al extraer clientes.", ex);
-        }
-
-        return serviciosRegulares;
-    }
-
     public ObservableList<ServicioRegular> getServiciosRegularesPendientes2() throws SQLException {
         ObservableList<ServicioRegular> serviciosRegularesPendientes =  FXCollections.observableArrayList();
 

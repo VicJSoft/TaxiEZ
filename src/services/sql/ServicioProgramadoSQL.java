@@ -29,39 +29,6 @@ public class ServicioProgramadoSQL {
         this.connection = Statics.getConnections();
     }
 
-    @Deprecated
-    /**
-     * Borrar. Creo no lo necesito.
-     */
-    public ObservableList<ServicioRegular> getServiciosRegularesPendientes(){
-        ObservableList<ServicioRegular> serviciosRegulares =  FXCollections.observableArrayList();
-
-       query = "SELECT * FROM " +
-               "servicio " +
-               "JOIN cliente ON servicio.idCliente = cliente.idCliente " +
-               "JOIN empleado  on servicio.idEmpleado = empleado.idEmpleado " +
-               "JOIN direccion ON servicio.idDireccion = direccion.idDireccion " +
-               "WHERE servicio.isCancelado = 0 and servicio.fechaAplicacion IS NULL " +
-               "LIMIT 0, 250";
-
-       try
-       {
-           ps = connection.prepareStatement(query);
-           rs=ps.executeQuery();
-           while(rs.next())
-           {
-               serviciosRegulares.add( crearServicioPendiente(rs) );
-           }
-
-           ps.close();
-       }
-       catch(SQLException ex)
-       {
-           Logger.getLogger(ClienteSQL.class.getName()).log(Level.SEVERE, "Error al extraer clientes.", ex);
-       }
-
-        return serviciosRegulares;
-    }
 
 
     /**
@@ -76,20 +43,32 @@ public class ServicioProgramadoSQL {
 
         ObservableList<ServiciosProgramado> serviciosRegularesPendientes =  FXCollections.observableArrayList();
 
-        query ="SELECT * FROM servicioprogramado  " +
-               // "WHERE servicio.fechaFinalizacion IS NULL " +
+        query ="SELECT * FROM servicioprogramado " +
+                "WHERE servicioprogramado.fechaFinalizacion IS NULL " +
+                "AND (servicioprogramado.fechaUltimoRegistro IS NULL OR servicioprogramado.fechaUltimoRegistro < (SELECT CURDATE()) )"+
+                "AND (servicioprogramado.fechaCancelacion IS NULL OR servicioprogramado.fechaCancelacion < (SELECT CURDATE()) )"+
                 " LIMIT 0,500 ";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet rs = preparedStatement.executeQuery();
 
+
+
         while(rs.next()){
+
+            boolean lunes =  rs.getBoolean("servicioprogramado.lunes");
+            boolean martes =  rs.getBoolean("servicioprogramado.martes");
+            boolean miercoles =  rs.getBoolean("servicioprogramado.miercoles");
+            boolean jueves =  rs.getBoolean("servicioprogramado.jueves");
+            boolean viernes =  rs.getBoolean("servicioprogramado.viernes");
+            boolean sabado =  rs.getBoolean("servicioprogramado.sabado");
+            boolean domingo =  rs.getBoolean("servicioprogramado.domingo");
 
             //puede ser null.
             LocalDateTime localDateTimeFin =
                     rs.getTimestamp("servicioprogramado.fechaFinalizacion") ==null?
                             null:rs.getTimestamp("servicioprogramado.fechaFinalizacion").toLocalDateTime();
-            if(localDateTimeFin==null) {
+            if( isServicioProgramadoToday(lunes,martes,miercoles,jueves,viernes,sabado,domingo)/*localDateTimeFin==null*/) {
 
                 Cliente clienteDelServicio = new ClienteSQL().get(rs.getInt("servicioprogramado.idCliente"));
                 Direccion direccionDelServicio = new DireccionSQL().get(rs.getInt("servicioprogramado.idDireccion"));
@@ -114,9 +93,9 @@ public class ServicioProgramadoSQL {
                                 localDateTimeAdicion, localDateTimeInicio, localDateTimeFin,
                                 false/*no hay campo isCancelado en programados, se puede extraer ese miembro a servicio regular, para que no se herede en el programado rs.getBoolean("servicioprogramado.isCancelado")*/
                                 , clienteDelServicio, empleadoRegistroServicio, localDateTimeUltimoRegistro,
-                                rs.getBoolean("servicioprogramado.lunes"), rs.getBoolean("servicioprogramado.martes"), rs.getBoolean("servicioprogramado.miercoles"),
-                                rs.getBoolean("servicioprogramado.jueves"), rs.getBoolean("servicioprogramado.viernes"), rs.getBoolean("servicioprogramado.sabado"),
-                                rs.getBoolean("servicioprogramado.domingo"));
+                                lunes, martes, miercoles,
+                                jueves, viernes, sabado,
+                                domingo);
 
                 // SRAplicado.setTaxi(taxisDelServicio);
 
@@ -131,6 +110,50 @@ public class ServicioProgramadoSQL {
         return serviciosRegularesPendientes;
 
     }
+
+    /**
+     * Comprobará si  hoy es alguno de estos dias que se marcan como activos.
+     * @param lunes
+     * @param martes
+     * @param miercoles
+     * @param jueves
+     * @param viernes
+     * @param sabado
+     * @param domingo
+     * @return
+     * Sí la comprobación es verdadera, se retorna true, de otra manera false.
+     */
+    private boolean isServicioProgramadoToday(
+            boolean lunes, boolean martes, boolean miercoles, boolean jueves, boolean viernes, boolean sabado, boolean domingo
+    ) {
+        String todayDay = LocalDateTime.now().getDayOfWeek().toString().toLowerCase();
+
+        if(todayDay.equals("monday") && lunes){
+            return true;
+        }else
+        if(todayDay.equals("tuesday") && martes){
+            return true;
+        }else
+        if(todayDay.equals("wednesday") && miercoles){
+            return true;
+        }else
+        if(todayDay.equals("thursday") && jueves){
+            return true;
+        }else
+        if(todayDay.equals("friday") && viernes){
+            return true;
+        }else
+        if(todayDay.equals("saturday") && sabado){
+            return true;
+        }else
+        if(todayDay.equals("sunday") && domingo){
+            return true;
+        }else
+            return false; //este caso  llegará cuando el servicio programado no se aplique el dia de hoy (currentDay).
+
+
+    }
+
 
     /**
      * TODO implementar correctamente para servicio programado.
@@ -197,7 +220,7 @@ public class ServicioProgramadoSQL {
                // "(nombre, observaciones, fechaAgregacion, fechaServicio, fechaAplicacion, isCancelado, idCliente, idEmpleado, idDireccion) " +
                 "VALUES" +
                 //idServicioProgramado, fechaFin y fechaUltimoReg = NULL -> columnas 1,6,7
-                " (NULL,?,?,?,?,  NULL,NULL,?,?,?,  ?,?,?,?,?  ,?,?)";
+                " (NULL,?,?,?,?,  NULL,NULL,?,?,?,  ?,?,?,?,?  ,?,?,null )";
 
         try {
 
