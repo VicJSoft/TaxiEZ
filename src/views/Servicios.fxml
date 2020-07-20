@@ -14,16 +14,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="anchorPaneRoot" prefHeight="669.0" prefWidth="991.0" stylesheets="@../resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ServiciosController">
+<AnchorPane fx:id="anchorPaneRoot" prefHeight="669.0" prefWidth="991.0" styleClass="ventana-blanca" stylesheets="@../resources/css/normalizacion.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ServiciosController">
    <children>
-      <JFXTabPane fx:id="tabPaneServicios" layoutX="34.0" prefHeight="669.0" prefWidth="991.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <JFXTabPane fx:id="tabPaneServicios" layoutX="34.0" prefHeight="669.0" prefWidth="991.0" styleClass="ventana-blanca" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
             <Tab fx:id="tabServicios" styleClass="letra" text="Servicios">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="ventana-blanca">
                      <children>
                         <JFXTextField fx:id="textField_buscarServicios" layoutX="14.0" layoutY="49.0" prefHeight="25.0" prefWidth="250.0" promptText="Buscar servicio por teléfono" styleClass="text-field-busqueda" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
-                        <JFXTreeTableView fx:id="tablaServicio" layoutY="70.0" prefHeight="562.0" prefWidth="991.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
+                        <JFXTreeTableView fx:id="tablaServicio" layoutY="70.0" prefHeight="562.0" prefWidth="991.0" styleClass="venta-blanca" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
                            <columns>
                               <TreeTableColumn fx:id="cmServicios_fechaAdd" prefWidth="103.0" text="Fecha adición" />
                               <TreeTableColumn fx:id="cmServicios_fechaServicio" prefWidth="103.0" text="Fecha Servicio" />

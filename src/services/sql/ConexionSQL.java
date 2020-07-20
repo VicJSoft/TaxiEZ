@@ -21,7 +21,7 @@ public class ConexionSQL
            SharePreferencesDB configuracionDB = SharePreferencesDB.getConfiguracion();
            String path = "jdbc:mysql://";
            path+=configuracionDB.getIp() + ":";
-           path+=configuracionDB.getPuerto() + "/taxiezf";
+           path+=configuracionDB.getPuerto() + "/taxi_ez";
            
            connection = DriverManager.getConnection(path,configuracionDB.getUser(),configuracionDB.getPass());
 
