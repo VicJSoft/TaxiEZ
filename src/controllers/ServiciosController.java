@@ -201,7 +201,28 @@ public class ServiciosController implements Initializable, IAccion {
 
         cmServicios_fechaAdd.setCellFactory(callbackDateTime);
         cmServicios_fechaServicio.setCellFactory(callbackDateTime);
-        cmServicios_FechaAplic.setCellFactory(callbackDateTime);
+        cmServicios_FechaAplic.setCellFactory(new Callback<TreeTableColumn<ServicioRegular, LocalDateTime>, TreeTableCell<ServicioRegular, LocalDateTime>>() {
+            @Override
+            public TreeTableCell<ServicioRegular, LocalDateTime> call(TreeTableColumn<ServicioRegular, LocalDateTime> param) {
+                TreeTableCell<ServicioRegular, LocalDateTime> cell = new TreeTableCell<ServicioRegular,LocalDateTime>(){
+                    @Override
+                    protected void updateItem(LocalDateTime item, boolean empty) {
+                        super.updateItem(item, empty);//empty hace referencia a row no usado. o sin valo.
+                        if( empty){
+                            setText(null);
+                        }else
+                        if(item!= null && !empty){
+                            setText(item.toString().replace('T','\n'));
+                        }else if(item == null){
+
+                                setText("Servicio cancelado.");
+                        }
+
+                    }
+                };
+                return cell;
+            }
+        });
 
         cmServicios_telefono.setCellFactory(new Callback<TreeTableColumn<ServicioRegular, Cliente>, TreeTableCell<ServicioRegular, Cliente>>() {
             @Override
@@ -212,6 +233,9 @@ public class ServiciosController implements Initializable, IAccion {
                     @Override
                     protected void updateItem(Cliente item, boolean empty) {
                         super.updateItem(item, empty);
+                        if(item == null || empty){
+                            setText(null);
+                        }else
                         if(item!=null){
                             setText(item.getNumero());
                         }
@@ -233,6 +257,9 @@ public class ServiciosController implements Initializable, IAccion {
                     @Override
                     protected void updateItem(Taxi item, boolean empty) {
                         super.updateItem(item, empty);
+                        if(item == null || empty){
+                            setText(null);
+                        }else
                         if(item!=null){
                             setText(item.getIdUnidad() + " " + item.getTaxista().getNombre());
                         }
@@ -252,6 +279,9 @@ public class ServiciosController implements Initializable, IAccion {
                     @Override
                     protected void updateItem(Empleado item, boolean empty) {
                         super.updateItem(item, empty);
+                        if(item == null || empty){
+                            setText(null);
+                        }else
                         if(item!=null){
                             setText(item.getIdEmpleado() + " " + item.getNombre());
                         }
@@ -299,6 +329,9 @@ public class ServiciosController implements Initializable, IAccion {
                     @Override
                     protected void updateItem(Cliente item, boolean empty) {
                         super.updateItem(item, empty);
+                        if(item == null || empty){
+                            setText(null);
+                        }else
                         if(item!=null){
                             setText(item.getNumero());
                         }
@@ -315,6 +348,9 @@ public class ServiciosController implements Initializable, IAccion {
                 @Override
                 protected void updateItem(Empleado item, boolean empty) {
                     super.updateItem(item, empty);
+                    if(item == null || empty){
+                        setText(null);
+                    }else
                     if(item!=null){
                         setText(item.getIdEmpleado() + " " + item.getNombre());
                     }
@@ -366,9 +402,9 @@ public class ServiciosController implements Initializable, IAccion {
                     @Override
                     protected void updateItem(LocalDateTime item, boolean empty) {
                         super.updateItem(item, empty);//empty hace referencia a row no usado. o sin valo.
-
-                        if(empty)
-                            return;
+                        if( empty){
+                            setText(null);
+                        }else
                         if(item!= null && !empty){
                             setText(item.toString().replace('T','\n'));
                         }/*else{
@@ -393,8 +429,9 @@ public class ServiciosController implements Initializable, IAccion {
                     protected void updateItem(LocalDateTime item, boolean empty) {
                         super.updateItem(item, empty);//empty hace referencia a row no usado. o sin valo.
 
-                        if(empty)
-                            return;
+                        if(empty){
+                            setText(null);
+                        }else
                         if(item!= null && !empty){
                             setText(item.toString().replace('T','\n'));
                         }else if(item == null){
@@ -420,6 +457,9 @@ public class ServiciosController implements Initializable, IAccion {
                     @Override
                     protected void updateItem(Empleado item, boolean empty) {
                         super.updateItem(item, empty);
+                        if(item == null || empty){
+                            setText(null);
+                        }else
                         if(item!=null){
                             setText(item.getIdEmpleado() + " " + item.getNombre());
                         }
@@ -440,6 +480,9 @@ public class ServiciosController implements Initializable, IAccion {
                     @Override
                     protected void updateItem(Cliente item, boolean empty) {
                         super.updateItem(item, empty);
+                        if(item == null || empty){
+                            setText(null);
+                        }else
                         if(item!=null){
                             setText(item.getNumero());
                         }
@@ -768,6 +811,9 @@ public class ServiciosController implements Initializable, IAccion {
             TreeTableCell<ServiciosProgramado, Direccion> cell = new TreeTableCell<ServiciosProgramado, Direccion>() {
                 protected void updateItem(Direccion item, boolean empty) {
                     super.updateItem(item, empty);
+                    if(item == null || empty){
+                        setText(null);
+                    }else
                     if (item != null) {
                         this.setText("Calle: " + item.getCalle() + " Colonia: " + item.getColonia()+ " \nNum ext: " + item.getNumExt() + (item.getNumInt() == null ? "" : " Num int: " + item.getNumInt()) );
                         //this.setPrefHeight(35);
@@ -788,14 +834,15 @@ public class ServiciosController implements Initializable, IAccion {
                 @Override
                 protected void updateItem(LocalDateTime item, boolean empty) {
                     super.updateItem(item, empty);//empty hace referencia a row no usado. o sin valo.
-
+                    if(item == null || empty){
+                        setText(null);
+                    }else
                     if(item!= null && !empty){
                         setText(item.toString().replace('T','\n'));
                     }else{
                         //cuando no aparece fechar o es nulla siempre será la columna de fecha aplicación
                         //por lo tanto se mostrará el mensaje:
-                        if(!empty)
-                            setText("Servicio cancelado.");
+                       setText(null);
                     }
 
                 }
@@ -811,6 +858,9 @@ public class ServiciosController implements Initializable, IAccion {
             TreeTableCell<ServicioRegular, Direccion> cell = new TreeTableCell<ServicioRegular, Direccion>() {
                 protected void updateItem(Direccion item, boolean empty) {
                     super.updateItem(item, empty);
+                    if(item == null || empty){
+                        setText(null);
+                    }else
                     if (item != null) {
                         this.setText("Calle: " + item.getCalle() + " Colonia: " + item.getColonia()+ " \nNum ext: " + item.getNumExt() + (item.getNumInt() == null ? "" : " Num int: " + item.getNumInt()) );
                         //this.setPrefHeight(35);
@@ -831,7 +881,9 @@ public class ServiciosController implements Initializable, IAccion {
                 @Override
                 protected void updateItem(LocalDateTime item, boolean empty) {
                     super.updateItem(item, empty);//empty hace referencia a row no usado. o sin valo.
-
+                    if(item == null || empty){
+                        setText(null);
+                    }else
                     if(item!= null && !empty){
                         setText(item.toString().replace('T','\n'));
                     }else{
