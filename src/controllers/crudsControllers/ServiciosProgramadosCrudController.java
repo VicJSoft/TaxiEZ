@@ -280,13 +280,44 @@ public class ServiciosProgramadosCrudController extends SetAddRegistroListener i
 
     @Override
     public void setLengthValidation() {
+/*
 
         textField_telefono.getValidators().add(new StringLengthValidator("Máximo 11 carácteres.",11));
         textField_colonia.getValidators().add(new StringLengthValidator("Máximo 45 carácteres.",45));
         textField_calle.getValidators().add(new StringLengthValidator("Máximo 45 carácteres.",45));
         textField_num_ext.getValidators().add(new StringLengthValidator("Máximo 10 carácteres.",10));
         textField_numInt.getValidators().add(new StringLengthValidator("Máximo 10 carácteres.",10));
+*/
 
+        textField_telefono.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>11) {
+                textField_telefono.setText(oldValue);
+            }
+        });
+
+        textField_colonia.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>45) {
+                textField_colonia.setText(oldValue);
+            }
+        });
+
+        textField_calle.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>45) {
+                textField_calle.setText(oldValue);
+            }
+        });
+
+        textField_num_ext.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>10) {
+                textField_num_ext.setText(oldValue);
+            }
+        });
+
+        textField_numInt.textProperty().addListener((observable,  oldValue,  newValue)-> {
+            if(newValue.length()>10) {
+                textField_numInt.setText(oldValue);
+            }
+        });
 
     }
 
